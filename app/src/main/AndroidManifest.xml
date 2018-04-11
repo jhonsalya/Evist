@@ -25,7 +25,8 @@
         <activity android:name=".EventDetailActivity" />
         <activity android:name=".UnpaidActivity" />
         <activity android:name=".UnpaidDetailActivity" />
-        <activity android:name=".UploadReceiptActivity"></activity>
+        <activity android:name=".UploadReceiptActivity" />
+        <activity android:name=".PurchasedActivity"></activity>
     </application>
 
 </manifest>
