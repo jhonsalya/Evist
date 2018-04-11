@@ -80,14 +80,6 @@
                         android:text="50.000"
                         android:textSize="24sp" />
 
-                    <Button
-                        android:id="@+id/button4"
-                        android:layout_marginTop="15dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:text="Confirm"
-                        android:textColor="@color/fbutton_color_midnight_blue"
-                        android:backgroundTint="@color/colorAccent"/>
                 </LinearLayout>
 
             </LinearLayout>
