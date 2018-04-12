@@ -22,18 +22,39 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".EventDetailActivity" />
-        <activity android:name=".UnpaidActivity" />
+        <activity android:name=".EventDetailActivity"/>
+        <activity android:name=".UnpaidActivity"
+            android:label="Unpaid List"
+            />
         <activity android:name=".UnpaidDetailActivity" />
-        <activity android:name=".UploadReceiptActivity" />
-        <activity android:name=".PurchasedActivity" />
-        <activity android:name=".UserProfileActivity" />
-        <activity android:name=".AddEventActivity" />
-        <activity android:name=".PaymentConfirmActivity" />
-        <activity android:name=".EditEventActivity" />
-        <activity android:name=".AddCategoryActivity" />
-        <activity android:name=".EditCategoryActivity" />
-        <activity android:name=".EditUserActivity"></activity>
+        <activity android:name=".UploadReceiptActivity"
+            android:label="Upload Receipt"
+            />
+        <activity android:name=".PurchasedActivity"
+            android:label="Purchased"
+            />
+        <activity android:name=".UserProfileActivity"
+            android:label="User Profile"
+            />
+        <activity android:name=".AddEventActivity"
+            android:label="Add Event"
+            />
+        <activity android:name=".PaymentConfirmActivity"
+            android:label="Confirm Payment"
+            />
+        <activity android:name=".EditEventActivity"
+            android:label="Edit Event"
+            />
+        <activity android:name=".AddCategoryActivity"
+            android:label="Add Category"
+            />
+        <activity android:name=".EditCategoryActivity"
+            android:label="Edit Category"
+            />
+        <activity
+            android:name=".EditUserActivity"
+            android:label="Edit User" />
+        <activity android:name=".CartActivity"></activity>
     </application>
 
 </manifest>
