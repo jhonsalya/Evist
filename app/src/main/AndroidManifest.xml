@@ -32,7 +32,8 @@
         <activity android:name=".PaymentConfirmActivity" />
         <activity android:name=".EditEventActivity" />
         <activity android:name=".AddCategoryActivity" />
-        <activity android:name=".EditCategoryActivity"></activity>
+        <activity android:name=".EditCategoryActivity" />
+        <activity android:name=".EditUserActivity"></activity>
     </application>
 
 </manifest>

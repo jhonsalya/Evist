@@ -69,7 +69,7 @@
         </android.support.v7.widget.CardView>
 
         <Button
-            android:id="@+id/btnEditEvent"
+            android:id="@+id/btnEditCategory"
             android:text="Edit Category"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
