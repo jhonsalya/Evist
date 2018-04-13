@@ -20,41 +20,56 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Register" />
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".EventDetailActivity"/>
-        <activity android:name=".UnpaidActivity"
-            android:label="Unpaid List"
-            />
-        <activity android:name=".UnpaidDetailActivity" />
-        <activity android:name=".UploadReceiptActivity"
-            android:label="Upload Receipt"
-            />
-        <activity android:name=".PurchasedActivity"
-            android:label="Purchased"
-            />
-        <activity android:name=".UserProfileActivity"
-            android:label="User Profile"
-            />
-        <activity android:name=".AddEventActivity"
-            android:label="Add Event"
-            />
-        <activity android:name=".PaymentConfirmActivity"
-            android:label="Confirm Payment"
-            />
-        <activity android:name=".EditEventActivity"
-            android:label="Edit Event"
-            />
-        <activity android:name=".AddCategoryActivity"
-            android:label="Add Category"
-            />
-        <activity android:name=".EditCategoryActivity"
-            android:label="Edit Category"
-            />
+        <activity android:name=".EventDetailActivity" />
+        <activity
+            android:name=".UnpaidActivity"
+            android:label="Unpaid List" />
+        <activity
+            android:name=".UnpaidDetailActivity"
+            android:label="Unpaid Event" />
+        <activity
+            android:name=".UploadReceiptActivity"
+            android:label="Upload Receipt" />
+        <activity
+            android:name=".PurchasedActivity"
+            android:label="Purchased" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:label="User Profile" />
+        <activity
+            android:name=".AddEventActivity"
+            android:label="Add Event" />
+        <activity
+            android:name=".EditEventActivity"
+            android:label="Edit Event" />
+        <activity
+            android:name=".AddCategoryActivity"
+            android:label="Add Category" />
+        <activity
+            android:name=".EditCategoryActivity"
+            android:label="Edit Category" />
         <activity
             android:name=".EditUserActivity"
             android:label="Edit User" />
-        <activity android:name=".CartActivity"></activity>
+        <activity
+            android:name=".CartActivity"
+            android:label="Cart" />
+        <activity
+            android:name=".CheckoutActivity"
+            android:label="Checkout" />
+        <activity
+            android:name=".SalesActivity"
+            android:label="Ticket Sold" />
+        <activity
+            android:name=".ConfirmPaymentActivity"
+            android:label="Confirm Payment" />
+        <activity
+            android:name=".ConfirmPaymentDetailActivity"
+            android:label="Confirm Payment"/>
     </application>
 
 </manifest>

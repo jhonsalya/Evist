@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CartActivity">
+    tools:context=".ConfirmPaymentActivity"
+    xmlns:mlns="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,7 +86,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
-                        android:text="Checkout"
+                        android:text="Confirm"
                         android:textColor="#ffff"
                         android:backgroundTint="@color/fbutton_color_midnight_blue"/>
 
