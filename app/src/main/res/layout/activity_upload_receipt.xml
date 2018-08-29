@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -148,6 +148,93 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transferred From"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:textColor="#000000"
+                    />
+
+                <View
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#d3d3d3" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edit_transffered_account_bank"
+                    android:hint="Bank Account"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@android:color/black"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:inputType="text"
+                    app:met_baseColor="@android:color/black"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_maxCharacters="25"
+                    app:met_primaryColor="@android:color/white"
+                    app:met_singleLineEllipsis="false"
+                    />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edit_transffered_account_number"
+                    android:hint="Account Number"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@android:color/black"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:inputType="text"
+                    app:met_baseColor="@android:color/black"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_maxCharacters="25"
+                    app:met_primaryColor="@android:color/white"
+                    app:met_singleLineEllipsis="false"
+                    />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edit_transffered_account_name"
+                    android:hint="Owner Name"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@android:color/black"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:inputType="text"
+                    app:met_baseColor="@android:color/black"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_maxCharacters="25"
+                    app:met_primaryColor="@android:color/white"
+                    app:met_singleLineEllipsis="false"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -160,6 +247,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
                 />
 
             <Button
@@ -173,4 +262,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>

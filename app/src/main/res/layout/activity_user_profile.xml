@@ -32,13 +32,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:src="@drawable/ic_settings_black_24dp"
         android:id="@+id/fab"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_settings_black_24dp" />
+        android:onClick="settingButtonClicked"
+        />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -76,7 +78,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/user_profile_margin"
-                            android:text="Baby"
+                            android:text="Githadiari"
                             android:textSize="20dp" />
 
                         <ImageView
@@ -100,7 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/user_profile_margin"
-                            android:text="Baby@gmail.com"
+                            android:text="gmail@githadiari.com"
                             android:textSize="20dp" />
                     </LinearLayout>
 
@@ -118,7 +120,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/user_profile_margin"
-                            android:text="+628763423435"
+                            android:text="+628123124342"
                             android:textSize="20dp" />
 
                         <ImageView
@@ -150,7 +152,11 @@
                     android:layout_height="1dp"
                     android:background="#d3d3d3" />
             </android.support.v7.widget.CardView>
+
+            <include layout="@layout/content_user_profile"/>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
 
 </android.support.design.widget.CoordinatorLayout>

@@ -86,8 +86,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:text="Checkout"
-                        android:textColor="#ffff"
-                        android:backgroundTint="@color/fbutton_color_midnight_blue"/>
+                        android:textColor="#ffffff"
+                        android:backgroundTint="@color/fbutton_color_midnight_blue"
+                        android:onClick="checkoutButtonClicked"
+                        />
 
                 </LinearLayout>
 

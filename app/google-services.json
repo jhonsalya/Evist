@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "113319910823",
+    "firebase_url": "https://evistproject.firebaseio.com",
+    "project_id": "evistproject",
+    "storage_bucket": "evistproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113319910823:android:d6322275b6737ed1",
+        "android_client_info": {
+          "package_name": "com.example.jhonsalya.evist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113319910823-taubl4ut3hhd7kbnp5b3qkq0i49tn30c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jhonsalya.evist",
+            "certificate_hash": "416a0350fe1007d3c49cbe332180174a6abc4110"
+          }
+        },
+        {
+          "client_id": "113319910823-maic1dq3pp3ao40ikj1poqp55vnmkqeq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAauMOidIyG4upOc7gWF__KoVz9WTVz27E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113319910823-maic1dq3pp3ao40ikj1poqp55vnmkqeq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -63,13 +63,19 @@
             android:label="Checkout" />
         <activity
             android:name=".SalesActivity"
-            android:label="Ticket Sold" />
+            android:label="Sales List" />
         <activity
             android:name=".ConfirmPaymentActivity"
             android:label="Confirm Payment" />
         <activity
             android:name=".ConfirmPaymentDetailActivity"
-            android:label="Confirm Payment"/>
+            android:label="Confirm Payment" />
+        <activity
+            android:name=".ListUserActivity"
+            android:label="User List" />
+        <activity
+            android:name=".CategoryActivity"
+            android:label="Category"/>
     </application>
 
 </manifest>

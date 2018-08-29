@@ -82,13 +82,15 @@
                         android:textSize="24sp" />
 
                     <Button
-                        android:id="@+id/button4"
+                        android:id="@+id/confirm_payment"
                         android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:text="Confirm"
                         android:textColor="#ffff"
-                        android:backgroundTint="@color/fbutton_color_midnight_blue"/>
+                        android:backgroundTint="@color/fbutton_color_midnight_blue"
+                        android:onClick="confirmButtonClicked"
+                        />
 
                 </LinearLayout>
 

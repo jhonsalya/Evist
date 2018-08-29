@@ -241,7 +241,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_start_time"
                     android:hint="Start Time"
-                    android:text="10.00 WITA"
+                    android:text="10.00"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
@@ -374,6 +374,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_event_bank_account"
                     android:hint="Bank Account"
+                    android:text="Mandiri Bank"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
@@ -393,6 +394,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_event_bank_account_no"
                     android:hint="Account Number"
+                    android:text="1233 4534 34344"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
@@ -412,6 +414,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_event_bank_account_owner"
                     android:hint="Account Owner Name"
+                    android:text="I Made Ngurah Bagus Agung"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
@@ -439,6 +442,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
             />
     </LinearLayout>
 

@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_add_to_photos_black_24dp"
+                    android:src="@drawable/festival"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
                     />
@@ -77,6 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
             />
     </LinearLayout>
 </RelativeLayout>
