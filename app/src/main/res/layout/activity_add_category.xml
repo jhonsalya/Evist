@@ -44,10 +44,12 @@
                     android:src="@drawable/ic_add_to_photos_black_24dp"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
+                    android:onClick="imageClicked"
+                    android:id="@+id/addCategoryImage"
                     />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/edit_event_name"
+                    android:id="@+id/edit_category_name"
                     android:hint="Category Name"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
@@ -69,6 +71,7 @@
 
         <Button
             android:id="@+id/btnEditEvent"
+            android:onClick="addCategoryButtonClicked"
             android:text="Add Category"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
