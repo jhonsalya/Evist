@@ -44,10 +44,12 @@
                     android:src="@drawable/festival"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
+                    android:onClick="imageClicked"
+                    android:id="@+id/editCategoryImage"
                     />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/edit_event_name"
+                    android:id="@+id/edit_category_name"
                     android:hint="Category Name"
                     android:text="Festival"
                     android:layout_marginRight="10dp"
@@ -70,6 +72,7 @@
 
         <Button
             android:id="@+id/btnEditCategory"
+            android:onClick="editCategoryButtonClicked"
             android:text="Edit Category"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
