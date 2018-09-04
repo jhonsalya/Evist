@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class EditCategoryActivity extends AppCompatActivity {
 
@@ -55,8 +56,9 @@ public class EditCategoryActivity extends AppCompatActivity {
 
         post_key = getIntent().getExtras().getString("PostId");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Category");
-        storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference().child("EventCategory");
 
+        imageButton = (ImageButton) findViewById(R.id.editCategoryImage);
         editName = (EditText) findViewById(R.id.edit_category_name);
 
         mAuth = FirebaseAuth.getInstance();
@@ -66,8 +68,10 @@ public class EditCategoryActivity extends AppCompatActivity {
         databaseReference.child(post_key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                String post_image = (String) dataSnapshot.child("image").getValue();
                 String post_name = (String) dataSnapshot.child("Name").getValue();
 
+                Picasso.with(EditCategoryActivity.this).load(post_image).into(imageButton);
                 editName.setText(post_name, TextView.BufferType.EDITABLE);
             }
 
