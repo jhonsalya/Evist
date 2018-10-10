@@ -212,20 +212,21 @@ public class AddEventActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     newPost.child("title").setValue(nameValue);
-                    newPost.child("category").setValue(locationValue);
-                    newPost.child("location").setValue(participantValue);
-                    newPost.child("price").setValue(participantValue);
-                    newPost.child("description").setValue(participantValue);
+                    newPost.child("category").setValue(categoryValue);
+                    newPost.child("location").setValue(locationValue);
+                    newPost.child("price").setValue(priceValue);
+                    newPost.child("description").setValue(descValue);
                     newPost.child("start_date").setValue(startDateValue);
                     newPost.child("finish_date").setValue(finishDateValue);
-                    newPost.child("start_time").setValue(participantValue);
+                    newPost.child("start_time").setValue(startTimeValue);
                     newPost.child("participant").setValue(participantValue);
-                    newPost.child("target_age").setValue(participantValue);
-                    newPost.child("organizer").setValue(participantValue);
-                    newPost.child("contact").setValue(participantValue);
-                    newPost.child("bank_account").setValue(categoryValue);
-                    newPost.child("account_number").setValue(descValue);
-                    newPost.child("account_owner").setValue(mCurrentUser.getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    newPost.child("target_age").setValue(targetAgeValue);
+                    newPost.child("organizer").setValue(organizerValue);
+                    newPost.child("contact").setValue(contactValue);
+                    newPost.child("bank_account").setValue(bankAccountValue);
+                    newPost.child("account_number").setValue(accountNumberValue);
+                    newPost.child("account_owner").setValue(accountOwnerValue);
+                    newPost.child("uid").setValue(mCurrentUser.getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){

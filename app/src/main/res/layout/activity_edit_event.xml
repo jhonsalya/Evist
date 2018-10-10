@@ -44,6 +44,7 @@
                     android:src="@drawable/event1"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
+                    android:onClick="imageClicked"
                     />
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -444,6 +445,7 @@
             android:layout_margin="8dp"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
+            android:onClick="editButtonClicked"
             />
     </LinearLayout>
 

@@ -51,9 +51,6 @@ public class EditCategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_category);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_category);
-
         post_key = getIntent().getExtras().getString("PostId");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Category");
         storageReference = FirebaseStorage.getInstance().getReference().child("EventCategory");

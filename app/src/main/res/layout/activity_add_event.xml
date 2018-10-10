@@ -45,6 +45,7 @@
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
                     android:id="@+id/addEventImage"
+                    android:onClick="imageClicked"
                     />
             </LinearLayout>
         </android.support.v7.widget.CardView>
