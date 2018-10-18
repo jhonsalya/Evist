@@ -28,12 +28,18 @@ import com.example.jhonsalya.evist.Model.Event;
 import com.example.jhonsalya.evist.Model.EventAdapter;
 import com.example.jhonsalya.evist.Sidebar.Constant;
 import com.example.jhonsalya.evist.Sidebar.SidebarAdapter;
+import com.example.jhonsalya.evist.ViewHolder.EventViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+
 
 public class MainActivity extends AppCompatActivity
         implements ExpandableListView.OnGroupClickListener,
@@ -57,11 +63,15 @@ public class MainActivity extends AppCompatActivity
     private EventAdapter adapter;
     private List<Event> eventList;
 
-    private RecyclerView mEventList;
+    //private RecyclerView mEventList;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    String mainId = "category";
+    String intentQuery = "";
+    Query dataQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,13 +126,57 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        //recyclerView.setAdapter(adapter);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("EventApp");
 
-        prepareEvents();
+        //prepareEvents();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(mainId == null){
+            mainId = "category";
+        }
+        if(intentQuery != null){
+            dataQuery = mDatabase.orderByChild(mainId).startAt(intentQuery).endAt(intentQuery+"\uf8ff");
+        }
+        else{
+            dataQuery = mDatabase.orderByChild(mainId);
+        }
+
+        FirebaseRecyclerAdapter <Event, EventViewHolder> FBRA = new FirebaseRecyclerAdapter<Event, EventViewHolder>(
+                Event.class,
+                R.layout.event_card,
+                EventViewHolder.class,
+                dataQuery
+                //mDatabase.orderByChild(mainId)
+        ) {
+            @Override
+            protected void populateViewHolder(EventViewHolder viewHolder, Event model, int position) {
+                final String post_key = getRef(position).getKey().toString();
+
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setDesc(model.getLocation());
+                viewHolder.setImage(getApplicationContext(),model.getImage());
+
+                //Detail Event
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent eventDetailActivity = new Intent(MainActivity.this, EventDetailActivity.class);
+                        eventDetailActivity.putExtra("PostId", post_key);
+                        startActivity(eventDetailActivity);
+                    }
+                });
+            }
+        };
+        recyclerView.setAdapter(FBRA);
     }
 
     //adding few albums for testing
-    private void prepareEvents(){
+    /*private void prepareEvents(){
         int[] covers = new int[]{
                 R.drawable.event1,
         };
@@ -143,7 +197,7 @@ public class MainActivity extends AppCompatActivity
         eventList.add(a);
 
         adapter.notifyDataSetChanged();
-    }
+    }*/
 
     //recylerview item decoration - give equal margin around grid item
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration{

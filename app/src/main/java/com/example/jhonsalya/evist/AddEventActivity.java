@@ -151,7 +151,7 @@ public class AddEventActivity extends AppCompatActivity {
         }
     }
 
-    private void changeImage(){
+    /*private void changeImage(){
         StorageReference filePath = storageReference.child("PostEvent").child(uri.getLastPathSegment());
         filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -159,19 +159,15 @@ public class AddEventActivity extends AppCompatActivity {
                 final Uri downloadurl = taskSnapshot.getDownloadUrl();
                 final DatabaseReference newPost = databaseReference.push();
                 newPost.child("image").setValue(downloadurl.toString());
-
+                Toast.makeText(AddEventActivity.this, "Change Image Function", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     public void addButtonClicked(View view){
         final ProgressDialog mDialog = new ProgressDialog(AddEventActivity.this);
         mDialog.setMessage("Please Wait.....");
         mDialog.show();
-
-        if(uri != null){
-            changeImage();
-        }
 
         final String nameValue = editName.getText().toString().trim();
         final String categoryValue = editCategory.getText().toString().trim();
@@ -206,45 +202,54 @@ public class AddEventActivity extends AppCompatActivity {
                 !TextUtils.isEmpty(accountNumberValue) &&
                 !TextUtils.isEmpty(accountOwnerValue)){
 
-            final DatabaseReference newPost = databaseReference.push();
-
-            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+            StorageReference filePath = storageReference.child("PostEvent").child(uri.getLastPathSegment());
+            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    newPost.child("title").setValue(nameValue);
-                    newPost.child("category").setValue(categoryValue);
-                    newPost.child("location").setValue(locationValue);
-                    newPost.child("price").setValue(priceValue);
-                    newPost.child("description").setValue(descValue);
-                    newPost.child("start_date").setValue(startDateValue);
-                    newPost.child("finish_date").setValue(finishDateValue);
-                    newPost.child("start_time").setValue(startTimeValue);
-                    newPost.child("participant").setValue(participantValue);
-                    newPost.child("target_age").setValue(targetAgeValue);
-                    newPost.child("organizer").setValue(organizerValue);
-                    newPost.child("contact").setValue(contactValue);
-                    newPost.child("bank_account").setValue(bankAccountValue);
-                    newPost.child("account_number").setValue(accountNumberValue);
-                    newPost.child("account_owner").setValue(accountOwnerValue);
-                    newPost.child("uid").setValue(mCurrentUser.getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    final Uri downloadurl = taskSnapshot.getDownloadUrl();
+                    final DatabaseReference newPost = databaseReference.push();
+
+                    mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                mDialog.dismiss();
-                                Toast.makeText(AddEventActivity.this, "Upload Complete", Toast.LENGTH_SHORT).show();
-                                Intent mainActivityIntent = new Intent(AddEventActivity.this, MainActivity.class);
-                                mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(mainActivityIntent);
-                            }
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            newPost.child("title").setValue(nameValue);
+                            newPost.child("image").setValue(downloadurl.toString());
+                            newPost.child("category").setValue(categoryValue);
+                            newPost.child("location").setValue(locationValue);
+                            newPost.child("price").setValue(priceValue);
+                            newPost.child("description").setValue(descValue);
+                            newPost.child("start_date").setValue(startDateValue);
+                            newPost.child("finish_date").setValue(finishDateValue);
+                            newPost.child("start_time").setValue(startTimeValue);
+                            newPost.child("participant").setValue(participantValue);
+                            newPost.child("target_age").setValue(targetAgeValue);
+                            newPost.child("organizer").setValue(organizerValue);
+                            newPost.child("contact").setValue(contactValue);
+                            newPost.child("bank_account").setValue(bankAccountValue);
+                            newPost.child("account_number").setValue(accountNumberValue);
+                            newPost.child("account_owner").setValue(accountOwnerValue);
+                            newPost.child("uid").setValue(mCurrentUser.getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        mDialog.dismiss();
+                                        Toast.makeText(AddEventActivity.this, "Upload Complete", Toast.LENGTH_SHORT).show();
+                                        Intent mainActivityIntent = new Intent(AddEventActivity.this, MainActivity.class);
+                                        mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(mainActivityIntent);
+                                    }
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
                         }
                     });
                 }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
             });
+
         }
     }
 }

@@ -25,12 +25,12 @@
             >
 
             <ImageView
-                android:id="@+id/img_food"
+                android:id="@+id/event_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
-                android:background="@drawable/event1"
+                android:background="@color/colorPrimaryDark"
                 />
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -74,7 +74,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/event_name"
+                        android:id="@+id/event_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -100,7 +100,7 @@
                             android:src="@drawable/rupiah" />
 
                         <TextView
-                            android:id="@+id/food_price"
+                            android:id="@+id/event_price"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="9"
@@ -134,7 +134,7 @@
                 app:cardUseCompatPadding="true">
 
                 <TextView
-                    android:id="@+id/food_description"
+                    android:id="@+id/event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"

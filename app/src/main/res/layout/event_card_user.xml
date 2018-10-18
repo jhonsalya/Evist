@@ -47,6 +47,16 @@
                 android:paddingRight="10dp"
                 android:textSize="12dp"/>
 
+            <ImageView
+                android:id="@+id/overflow"
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/thumbnail"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_more_vert_black_24dp"/>
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

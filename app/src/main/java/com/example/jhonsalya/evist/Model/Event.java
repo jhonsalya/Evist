@@ -1,33 +1,33 @@
 package com.example.jhonsalya.evist.Model;
 
 public class Event {
-    private String name, location, price;
-    private int thumbnail;
+    private String title, location, price;
+    private String image;
 
     public Event() {
     }
 
-    public Event(String name, String location, String price, int thumbnail) {
-        this.name = name;
+    public Event(String title, String location, String price, String image) {
+        this.title = title;
         this.location = location;
         this.price = price;
-        this.thumbnail = thumbnail;
+        this.image = image;
     }
 
-    public int getThumbnail() {
-        return thumbnail;
+    public String getImage() {
+        return image;
     }
 
-    public void setThumbnail(int thumbnail) {
-        this.thumbnail = thumbnail;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getLocation() {

@@ -209,7 +209,6 @@ public class EditEventActivity extends AppCompatActivity {
                 final Uri downloadurl = taskSnapshot.getDownloadUrl();
                 final DatabaseReference newPost = databaseReference.child(post_key);
                 newPost.child("image").setValue(downloadurl.toString());
-
             }
         });
     }

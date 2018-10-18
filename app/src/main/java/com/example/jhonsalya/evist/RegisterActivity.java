@@ -60,11 +60,11 @@ public class RegisterActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
                         String user_id = mAuth.getCurrentUser().getUid();
                         DatabaseReference newPost = mDatabase.child(user_id);
-                        newPost.child("Name").setValue(nameValue);
-                        newPost.child("Phone").setValue(phoneValue);
-                        newPost.child("Password").setValue(passwordValue);
-                        newPost.child("Email").setValue(emailValue);
-                        newPost.child("Image").setValue("default");
+                        newPost.child("name").setValue(nameValue);
+                        newPost.child("phone").setValue(phoneValue);
+                        newPost.child("password").setValue(passwordValue);
+                        newPost.child("email").setValue(emailValue);
+                        newPost.child("image").setValue("default");
 
                         Toast.makeText(RegisterActivity.this, "Register Complete, Please Login", Toast.LENGTH_LONG).show();
                         Intent loginActivityIntent = new Intent(RegisterActivity.this, LoginActivity.class);

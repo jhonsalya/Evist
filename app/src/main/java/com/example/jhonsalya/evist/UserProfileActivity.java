@@ -43,11 +43,11 @@ public class UserProfileActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        prepareEvents();
+        //prepareEvents();
     }
 
     //adding few albums for testing
-    private void prepareEvents(){
+    /*private void prepareEvents(){
         int[] covers = new int[]{
                 R.drawable.event1,
         };
@@ -68,7 +68,7 @@ public class UserProfileActivity extends AppCompatActivity {
         eventList.add(a);
 
         adapter.notifyDataSetChanged();
-    }
+    }*/
 
     //recylerview item decoration - give equal margin around grid item
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration{
