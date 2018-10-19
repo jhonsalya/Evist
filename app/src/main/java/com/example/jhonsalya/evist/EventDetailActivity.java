@@ -23,6 +23,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private String post_key = null;
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseUsers;
     private ImageView detailPostImage;
     private TextView detailPostTitle;
     private TextView detailPostCategory;
@@ -36,10 +37,13 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView detailPostTargetAge;
     private TextView detailPostOrganizer;
     private TextView detailPostContact;
+    private TextView detailPostedBy;
 
     private TextView detailPostBankAccount;
     private TextView detailPostAccountNumber;
     private TextView detailPostAccountOwner;
+
+    private TextView detailUserName;
 
     private Button deleteButton;
     private Button editButton;
@@ -67,6 +71,8 @@ public class EventDetailActivity extends AppCompatActivity {
         detailPostTargetAge = (TextView) findViewById(R.id.event_target_age_value);
         detailPostOrganizer = (TextView) findViewById(R.id.event_organizer_value);
         detailPostContact = (TextView) findViewById(R.id.event_organizer_phone_value);
+        detailPostedBy = (TextView) findViewById(R.id.event_posted_by_value);
+
 
 //        detailPostBankAccount = (TextView) findViewById(R.id.detailParticipant);
 //        detailPostAccountNumber = (TextView) findViewById(R.id.detailParticipant);
@@ -100,6 +106,20 @@ public class EventDetailActivity extends AppCompatActivity {
                 String post_account_number = (String) dataSnapshot.child("account_number").getValue();
                 String post_account_owner = (String) dataSnapshot.child("account_owner").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
+
+                mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(post_uid);
+                mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String post_posted_by = (String) dataSnapshot.child("name").getValue();
+                        detailPostedBy.setText(post_posted_by);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 Picasso.with(EventDetailActivity.this).load(post_image).into(detailPostImage);
                 detailPostTitle.setText(post_title);

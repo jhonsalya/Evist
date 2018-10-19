@@ -13,10 +13,23 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jhonsalya.evist.Model.Event;
 import com.example.jhonsalya.evist.Model.EventAdapter;
+import com.example.jhonsalya.evist.ViewHolder.EventViewHolder;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +39,24 @@ public class UserProfileActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EventAdapter adapter;
     private List<Event> eventList;
+
+    //private RecyclerView mEventList;
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabaseUsers;
+    private FirebaseUser mCurrentUser;
+
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    String mainId = "uid";
+    String intentQuery = "";
+    Query dataQuery;
+
+    private String post_key = null;
+    private ImageView detailUserImage;
+    private TextView detailUserName;
+    private TextView detailUserEmail;
+    private TextView detailUserPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +72,82 @@ public class UserProfileActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        //recyclerView.setAdapter(adapter);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("EventApp");
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        intentQuery = mCurrentUser.getUid();
+
+        detailUserImage = (ImageView) findViewById(R.id.user_image);
+        detailUserName = (TextView) findViewById(R.id.user_name_value);
+        detailUserEmail = (TextView) findViewById(R.id.user_email_value);
+        detailUserPhone = (TextView) findViewById(R.id.user_phone_value);
+
+        mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String user_image = (String) dataSnapshot.child("image").getValue();
+                String user_name = (String) dataSnapshot.child("name").getValue();
+                String user_email = (String) dataSnapshot.child("email").getValue();
+                String user_phone = (String) dataSnapshot.child("phone").getValue();
+
+                //Picasso.with(DetailEventActivity.this).load(user_image).into(detailUserImage);
+                detailUserName.setText(user_name);
+                detailUserEmail.setText(user_email);
+                detailUserPhone.setText(user_phone);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         //prepareEvents();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(mainId == null){
+            mainId = "uid";
+        }
+        if(intentQuery != null){
+            dataQuery = mDatabase.orderByChild(mainId).startAt(intentQuery).endAt(intentQuery+"\uf8ff");
+        }
+        else{
+            dataQuery = mDatabase.orderByChild(mainId);
+        }
+
+        FirebaseRecyclerAdapter<Event, EventViewHolder> FBRA = new FirebaseRecyclerAdapter<Event, EventViewHolder>(
+                Event.class,
+                R.layout.event_card_user,
+                EventViewHolder.class,
+                dataQuery
+                //mDatabase.orderByChild(user)
+        ) {
+            @Override
+            protected void populateViewHolder(EventViewHolder viewHolder, Event model, int position) {
+                final String post_key = getRef(position).getKey().toString();
+
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setDesc(model.getLocation());
+                viewHolder.setImage(getApplicationContext(),model.getImage());
+
+                //Detail Event
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent eventDetailActivity = new Intent(UserProfileActivity.this, EventDetailActivity.class);
+                        eventDetailActivity.putExtra("PostId", post_key);
+                        startActivity(eventDetailActivity);
+                    }
+                });
+            }
+        };
+        recyclerView.setAdapter(FBRA);
     }
 
     //adding few albums for testing
