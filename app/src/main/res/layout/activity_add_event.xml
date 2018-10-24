@@ -131,7 +131,7 @@
                     app:met_baseColor="@android:color/black"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
-                    app:met_maxCharacters="11"
+                    app:met_maxCharacters="80"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="true"
                     />
@@ -175,7 +175,7 @@
                     app:met_baseColor="@android:color/black"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
-                    app:met_maxCharacters="11"
+                    app:met_maxCharacters="110"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="false"
                     />
