@@ -12,9 +12,12 @@ import com.squareup.picasso.Picasso;
 public class EventViewHolder extends RecyclerView.ViewHolder{
 
     View mView;
+    public ImageView overflow;
     public EventViewHolder(View itemView){
         super(itemView);
         mView = itemView;
+
+        overflow = (ImageView) itemView.findViewById(R.id.overflow);
     }
 
     public void setTitle(String title){

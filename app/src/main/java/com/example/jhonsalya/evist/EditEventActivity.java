@@ -75,7 +75,7 @@ public class EditEventActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("EventApp");
         storageReference = FirebaseStorage.getInstance().getReference().child("PostEvent");
 
-        imageButton = (ImageButton) findViewById(R.id.addEventImage);
+        imageButton = (ImageButton) findViewById(R.id.edit_event_image);
         editName = (EditText) findViewById(R.id.edit_event_name);
         editCategory = (EditText) findViewById(R.id.edit_category);
         editLocation  = (EditText) findViewById(R.id.edit_location);
@@ -255,7 +255,7 @@ public class EditEventActivity extends AppCompatActivity {
                 !TextUtils.isEmpty(accountNumberValue) &&
                 !TextUtils.isEmpty(accountOwnerValue)){
 
-            final DatabaseReference newPost = databaseReference.push();
+            final DatabaseReference newPost = databaseReference.child(post_key);
 
             mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                 @Override

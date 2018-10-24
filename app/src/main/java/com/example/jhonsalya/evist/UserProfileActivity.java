@@ -11,9 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +39,10 @@ import java.util.List;
 public class UserProfileActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private EventAdapter adapter;
+    //private EventAdapter adapter;
     private List<Event> eventList;
+
+    FirebaseRecyclerAdapter<Event,EventViewHolder> adapter;
 
     //private RecyclerView mEventList;
     private DatabaseReference mDatabase;
@@ -66,7 +70,7 @@ public class UserProfileActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         eventList = new ArrayList<>();
-        adapter = new EventAdapter(this, eventList);
+        //adapter = new EventAdapter(this, eventList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -129,7 +133,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 //mDatabase.orderByChild(user)
         ) {
             @Override
-            protected void populateViewHolder(EventViewHolder viewHolder, Event model, int position) {
+            protected void populateViewHolder(final EventViewHolder viewHolder, Event model, int position) {
                 final String post_key = getRef(position).getKey().toString();
 
                 viewHolder.setTitle(model.getTitle());
@@ -145,10 +149,51 @@ public class UserProfileActivity extends AppCompatActivity {
                         startActivity(eventDetailActivity);
                     }
                 });
+                viewHolder.overflow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showPopupMenu(viewHolder.overflow);
+                    }
+
+                    //showing popup menu when taping icon
+                    private void showPopupMenu(View view){
+                        //Tutorial on 10.50 android card view and recycler view
+                        PopupMenu popup = new PopupMenu(getApplicationContext(),view);
+                        MenuInflater inflater = popup.getMenuInflater();
+                        inflater.inflate(R.menu.menu_event, popup.getMenu());
+                        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+                        popup.show();
+                    }
+
+                    //click listener for popup menu items
+                    class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener{
+                        public MyMenuItemClickListener(){
+
+                        }
+                        public boolean onMenuItemClick(MenuItem menuItem){
+                            switch(menuItem.getItemId()){
+                                case R.id.action_add_favourite:
+                                    Toast.makeText(getApplicationContext(),"Edit Event", Toast.LENGTH_SHORT).show();
+                                    Intent editActivityIntent = new Intent(UserProfileActivity.this, EditEventActivity.class);
+                                    editActivityIntent.putExtra("PostId",post_key);
+                                    startActivity(editActivityIntent);
+                                    return true;
+                                case R.id.action_play_next:
+                                    Toast.makeText(getApplicationContext(), "Delete Event", Toast.LENGTH_SHORT).show();
+                                    mDatabase.child(post_key).removeValue();
+                                    return true;
+                                default:
+                            }
+                            return false;
+                        }
+                    }
+                });
             }
         };
         recyclerView.setAdapter(FBRA);
     }
+
+
 
     //adding few albums for testing
     /*private void prepareEvents(){
