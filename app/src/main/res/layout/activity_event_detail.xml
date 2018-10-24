@@ -168,10 +168,9 @@
                         android:id="@+id/event_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:lineSpacingMultiplier="1.5"
                         android:padding="12dp"
-                        android:text="GOR Ngurah Rai Denpasar GOR Ngurah Rai Denpasar GOR Ngurah Rai Denpasar GOR Ngurah Rai Denpasar GOR Ngurah Rai Denpasar"
+                        android:text="GOR Ngurah Rai Denpasar, Jalan Kamboja"
                         android:textColor="@android:color/black"
                         android:textSize="14sp" />
                 </LinearLayout>

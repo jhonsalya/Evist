@@ -205,13 +205,18 @@
                     android:textColorHint="@android:color/black"
                     android:textColor="@android:color/black"
                     android:textSize="17dp"
-                    android:inputType="date"
+                    android:inputType="text"
                     app:met_baseColor="@android:color/black"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
                     app:met_maxCharacters="11"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="true"
+
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
@@ -224,13 +229,18 @@
                     android:textColorHint="@android:color/black"
                     android:textColor="@android:color/black"
                     android:textSize="17dp"
-                    android:inputType="date"
+                    android:inputType="text"
                     app:met_baseColor="@android:color/black"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
                     app:met_maxCharacters="11"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="true"
+
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
