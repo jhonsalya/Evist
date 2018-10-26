@@ -93,7 +93,7 @@
                     app:met_baseColor="@android:color/black"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
-                    app:met_maxCharacters="25"
+                    app:met_maxCharacters="30"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="false"
                     />
@@ -133,7 +133,7 @@
                     app:met_baseColor="@android:color/black"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
-                    app:met_maxCharacters="30"
+                    app:met_maxCharacters="80"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="true"
                     />
@@ -179,7 +179,7 @@
                     app:met_baseColor="@android:color/black"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
-                    app:met_maxCharacters="5000"
+                    app:met_maxCharacters="500"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="false"
                     />
@@ -201,7 +201,6 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_start_date"
                     android:hint="Start Date"
-                    android:text="12/04/2018"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
@@ -210,19 +209,23 @@
                     android:textColorHint="@android:color/black"
                     android:textColor="@android:color/black"
                     android:textSize="17dp"
-                    android:inputType="date"
+                    android:inputType="text"
                     app:met_baseColor="@android:color/black"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
                     app:met_maxCharacters="11"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="true"
+
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_finish_date"
                     android:hint="Finish Date"
-                    android:text="15/04/2018"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
@@ -230,19 +233,23 @@
                     android:textColorHint="@android:color/black"
                     android:textColor="@android:color/black"
                     android:textSize="17dp"
-                    android:inputType="date"
+                    android:inputType="text"
                     app:met_baseColor="@android:color/black"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
                     app:met_maxCharacters="11"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="true"
+
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_start_time"
                     android:hint="Start Time"
-                    android:text="10.00"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
