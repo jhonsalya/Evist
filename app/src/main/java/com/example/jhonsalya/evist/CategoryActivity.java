@@ -3,9 +3,11 @@ package com.example.jhonsalya.evist;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import com.example.jhonsalya.evist.ViewHolder.CategoryViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -36,7 +39,7 @@ public class CategoryActivity extends AppCompatActivity {
         //load menu
         recycler_event = (RecyclerView) findViewById(R.id.recycler_event);
         recycler_event.setHasFixedSize(true);
-        recycler_event.setLayoutManager(new LinearLayoutManager(this));
+        recycler_event.setLayoutManager(new GridLayoutManager(this, 2));
 
         loadMenu();
     }
@@ -49,10 +52,13 @@ public class CategoryActivity extends AppCompatActivity {
                 category) {
             @Override
             protected void populateViewHolder(CategoryViewHolder viewHolder, Category model, int position) {
-                final String post_key = getRef(position).getKey().toString();
 
-                viewHolder.setName(model.getName());
-                viewHolder.setImage(getApplicationContext(),model.getImage());
+                viewHolder.txtCategoryName.setText(model.getName());
+                //viewHolder.image.(getApplicationContext(),model.getImage());
+                Picasso.with(getApplicationContext()).load(model.getImage()).into(viewHolder.image);
+
+                final String post_key = model.getName();
+                final Category clickItem = model;
 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -72,4 +78,5 @@ public class CategoryActivity extends AppCompatActivity {
         recycler_event.setAdapter(adapter);
 
     }
+
 }

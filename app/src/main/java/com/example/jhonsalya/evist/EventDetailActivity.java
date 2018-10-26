@@ -1,5 +1,7 @@
 package com.example.jhonsalya.evist;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.jhonsalya.evist.Model.Event;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,6 +54,12 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    FloatingActionButton btnCart;
+    ElegantNumberButton numberButton;
+
+    Event currentEvent;
+    String eventId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +67,27 @@ public class EventDetailActivity extends AppCompatActivity {
 
         post_key = getIntent().getExtras().getString("PostId");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("EventApp");
+
+        //Init view
+        numberButton = (ElegantNumberButton)findViewById(R.id.number_button);
+        btnCart = (FloatingActionButton)findViewById(R.id.btnCart);
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*new Database(getBaseContext()).addToCart(new Order(
+                        eventId,
+                        currentEvent.getTitle(),
+                        numberButton.getNumber(),
+                        currentEvent.getPrice(),
+                        currentEvent.getLocation()
+                ));*/
+
+                Toast.makeText(EventDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                Intent cartActivity = new Intent(EventDetailActivity.this, CartActivity.class);
+                startActivity(cartActivity);
+            }
+        });
 
         detailPostImage = (ImageView) findViewById(R.id.event_image);
         detailPostTitle = (TextView) findViewById(R.id.event_title);
