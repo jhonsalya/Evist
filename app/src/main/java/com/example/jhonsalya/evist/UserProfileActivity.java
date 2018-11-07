@@ -97,7 +97,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 String user_email = (String) dataSnapshot.child("email").getValue();
                 String user_phone = (String) dataSnapshot.child("phone").getValue();
 
-                //Picasso.with(DetailEventActivity.this).load(user_image).into(detailUserImage);
+                Picasso.with(UserProfileActivity.this).load(user_image).into(detailUserImage);
                 detailUserName.setText(user_name);
                 detailUserEmail.setText(user_email);
                 detailUserPhone.setText(user_phone);

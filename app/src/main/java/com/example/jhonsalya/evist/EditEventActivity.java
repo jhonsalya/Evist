@@ -202,7 +202,7 @@ public class EditEventActivity extends AppCompatActivity {
     }
 
     private void changeImage(){
-        StorageReference filePath = storageReference.child("PostEvent").child(uri.getLastPathSegment());
+        StorageReference filePath = storageReference.child(uri.getLastPathSegment());
         filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
