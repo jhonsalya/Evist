@@ -75,7 +75,8 @@
             android:label="User List" />
         <activity
             android:name=".CategoryActivity"
-            android:label="Category"/>
+            android:label="Category" />
+        <activity android:name=".EventByCategoryActivity"></activity>
     </application>
 
 </manifest>
