@@ -13,7 +13,7 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_payment);
     }
 
-    public void confirmButtonClicked(View view){
+    public void confirmListButton(View view){
         Intent registerIntent = new Intent(ConfirmPaymentActivity.this, ConfirmPaymentDetailActivity.class);
         registerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(registerIntent);

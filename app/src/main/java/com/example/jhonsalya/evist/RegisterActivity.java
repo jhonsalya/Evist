@@ -65,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                         newPost.child("password").setValue(passwordValue);
                         newPost.child("email").setValue(emailValue);
                         newPost.child("image").setValue("default");
+                        newPost.child("status").setValue("0");
 
                         Toast.makeText(RegisterActivity.this, "Register Complete, Please Login", Toast.LENGTH_LONG).show();
                         Intent loginActivityIntent = new Intent(RegisterActivity.this, LoginActivity.class);

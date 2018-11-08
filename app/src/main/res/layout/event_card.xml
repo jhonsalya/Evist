@@ -26,26 +26,34 @@
 
             <TextView
                 android:id="@+id/title"
-                android:text="Title"
-                android:layout_width="match_parent"
+                android:text="Chat Competition"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thumbnail"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="10dp"
                 android:textColor="@color/colorAccent"
-                android:textSize="15dp"/>
+                android:textSize="15dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:maxWidth="140dp"
+                />
 
             <TextView
                 android:id="@+id/count"
-                android:text="location"
-                android:layout_width="match_parent"
+                android:text="Denpasar Selatan Sanaan Lagi"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="12dp"/>
+                android:textSize="12dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:maxWidth="130dp"
+                />
 
         </RelativeLayout>
 

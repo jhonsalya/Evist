@@ -125,7 +125,7 @@ public class EditCategoryActivity extends AppCompatActivity {
             mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    newPost.child("Name").setValue(nameValue).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    newPost.child("name").setValue(nameValue).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){

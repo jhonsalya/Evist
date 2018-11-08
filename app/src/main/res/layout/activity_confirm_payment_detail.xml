@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_receipt_black_24dp"
+                    android:src="@drawable/receipt"
                     />
             </LinearLayout>
 
@@ -85,7 +85,7 @@
                         android:id="@+id/event_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bakso Festival"
+                        android:text="Billiard Tournament"
                         android:textSize="20dp"
                         android:textColor="#000000"
                         />
@@ -109,7 +109,7 @@
                             android:layout_marginTop="5dp"
                             android:textAlignment="textEnd"
                             android:layout_gravity="end"
-                            android:text="GOR Ngurah Rai" />
+                            android:text="The Ship" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -210,7 +210,7 @@
                             android:layout_marginTop="5dp"
                             android:textAlignment="textEnd"
                             android:layout_gravity="end"
-                            android:text="BCA (Bank Central Asia)" />
+                            android:text="BNI" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -231,7 +231,7 @@
                             android:layout_marginTop="5dp"
                             android:textAlignment="textEnd"
                             android:layout_gravity="end"
-                            android:text="4353 7867865" />
+                            android:text="43537867865" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -252,7 +252,7 @@
                             android:layout_marginTop="5dp"
                             android:textAlignment="textEnd"
                             android:layout_gravity="end"
-                            android:text="Ni Wayan Ayu Sekar Jempiring" />
+                            android:text="Ketut Picolo" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -264,6 +264,7 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:onClick="confirmPayment"
                 android:text="CONFIRM PAYMENT"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"

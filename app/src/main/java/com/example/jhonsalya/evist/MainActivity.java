@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(View view) {
                         Intent eventDetailActivity = new Intent(MainActivity.this, EventDetailActivity.class);
                         eventDetailActivity.putExtra("PostId", post_key);
-                        Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_SHORT).show();
                         startActivity(eventDetailActivity);
                     }
                 });
@@ -457,7 +457,7 @@ public class MainActivity extends AppCompatActivity
             case Constant.S_POS_LOGOUT:
                 showToast("Logged Out");
                 mAuth.signOut();
-                Intent LogoutIntent = new Intent(MainActivity.this, UnpaidDetailActivity .class);
+                Intent LogoutIntent = new Intent(MainActivity.this, LoginActivity .class);
                 startActivity(LogoutIntent);
                 break;
 

@@ -47,9 +47,12 @@
                         android:id="@+id/event_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bakso Festival"
+                        android:text="Billiard Tournament"
                         android:textSize="20dp"
                         android:textColor="#000000"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:maxWidth="180dp"
                         />
 
                     <LinearLayout
@@ -71,7 +74,8 @@
                             android:layout_marginTop="5dp"
                             android:textAlignment="textEnd"
                             android:layout_gravity="end"
-                            android:text="GOR Ngurah Rai" />
+                            android:text="The Ship"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -113,7 +117,7 @@
                             android:layout_marginTop="5dp"
                             android:textAlignment="textEnd"
                             android:layout_gravity="end"
-                            android:text="13.00 WITA" />
+                            android:text="Start at 10.00" />
                     </LinearLayout>
 
                     <LinearLayout

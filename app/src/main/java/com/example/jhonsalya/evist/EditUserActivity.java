@@ -109,6 +109,7 @@ public class EditUserActivity extends AppCompatActivity {
                 newPost.child("image").setValue(downloadurl.toString());
             }
         });
+
     }
 
     public void editUserButtonClicked(View view){

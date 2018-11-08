@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             // log error here
                             Toast.makeText(LoginActivity.this, "Wrong Password", Toast.LENGTH_LONG).show();
+                            mDialog.dismiss();
                             e.printStackTrace();
                             Log.e("Some Tag", e.getMessage(), e);
                         }
@@ -87,7 +88,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.child(user_id).getValue(User.class);
-                if(user.getStatus() == "0") {
+                //Toast.makeText(LoginActivity.this, user.getStatus(), Toast.LENGTH_SHORT).show();
+                if(user.getStatus().equals("0")) {
                     if (dataSnapshot.hasChild(user_id)) {
                         Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
                         Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
