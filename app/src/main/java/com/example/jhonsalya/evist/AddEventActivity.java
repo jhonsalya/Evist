@@ -9,11 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.jhonsalya.evist.Model.Category;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +31,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddEventActivity extends AppCompatActivity {
 
@@ -47,6 +52,7 @@ public class AddEventActivity extends AppCompatActivity {
     private EditText editTargetAge;
     private EditText editOrganizer;
     private EditText editContact;
+    private Spinner editSpinner;
 
     //bank info
     private EditText editBankAccount;
@@ -56,6 +62,7 @@ public class AddEventActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private DatabaseReference categoryReference;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
@@ -80,6 +87,7 @@ public class AddEventActivity extends AppCompatActivity {
         editTargetAge = (EditText) findViewById(R.id.edit_target_age);
         editOrganizer = (EditText) findViewById(R.id.edit_event_organizer);
         editContact = (EditText) findViewById(R.id.edit_contact);
+        editSpinner = findViewById(R.id.spinner);
 
         //bank info
         editBankAccount = (EditText) findViewById(R.id.edit_event_bank_account);
@@ -88,6 +96,7 @@ public class AddEventActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = database.getInstance().getReference().child("EventApp");
+        categoryReference = FirebaseDatabase.getInstance().getReference();
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
@@ -105,6 +114,7 @@ public class AddEventActivity extends AppCompatActivity {
                 DatePickerDialog mDatePicker = new DatePickerDialog(AddEventActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
+                        selectedMonth++;
                         editStartDate.setText(selectedDay+"/"+selectedMonth+"/"+selectedYear);
                         mCurrentDate.set(selectedYear, selectedMonth, selectedDay);
                     }
@@ -125,11 +135,38 @@ public class AddEventActivity extends AppCompatActivity {
                 DatePickerDialog mDatePicker = new DatePickerDialog(AddEventActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
+                        selectedMonth++;
                         editFinishDate.setText(selectedDay+"/"+selectedMonth+"/"+selectedYear);
                         mCurrentDate.set(selectedYear, selectedMonth, selectedDay);
                     }
                 }, year, month, day);
                 mDatePicker.show();
+            }
+        });
+
+        //load category to the spinner
+        categoryReference.child("Category").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Is better to use a List, because you don't know the size
+                // of the iterator returned by dataSnapshot.getChildren() to
+                // initialize the array
+                final List<String> areas = new ArrayList<String>();
+
+                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                    String areaName = areaSnapshot.child("name").getValue(String.class);
+                    areas.add(areaName);
+                }
+
+                Spinner areaSpinner = (Spinner) findViewById(R.id.spinner);
+                ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(AddEventActivity.this, android.R.layout.simple_spinner_item, areas);
+                areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                areaSpinner.setAdapter(areasAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
@@ -181,13 +218,14 @@ public class AddEventActivity extends AppCompatActivity {
         final String targetAgeValue = editTargetAge.getText().toString().trim();
         final String organizerValue = editOrganizer.getText().toString().trim();
         final String contactValue =  editContact.getText().toString().trim();
+        final String categorySpinnerValue = editSpinner.getSelectedItem().toString();
 
         final String bankAccountValue = editBankAccount.getText().toString().trim();
         final String accountNumberValue = editAccountNumber.getText().toString().trim();
         final String accountOwnerValue = editAccountOwner.getText().toString().trim();
 
         if(!TextUtils.isEmpty(nameValue) &&
-                !TextUtils.isEmpty(categoryValue) &&
+                !TextUtils.isEmpty(categorySpinnerValue) &&
                 !TextUtils.isEmpty(locationValue) &&
                 !TextUtils.isEmpty(priceValue) &&
                 !TextUtils.isEmpty(descValue) &&
@@ -214,7 +252,7 @@ public class AddEventActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             newPost.child("title").setValue(nameValue);
                             newPost.child("image").setValue(downloadurl.toString());
-                            newPost.child("category").setValue(categoryValue);
+                            newPost.child("category").setValue(categorySpinnerValue);
                             newPost.child("location").setValue(locationValue);
                             newPost.child("price").setValue(priceValue);
                             newPost.child("description").setValue(descValue);
