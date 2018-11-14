@@ -1,8 +1,11 @@
 package com.example.jhonsalya.evist;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,8 +22,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -30,16 +35,22 @@ import com.example.jhonsalya.evist.Sidebar.Constant;
 import com.example.jhonsalya.evist.Sidebar.SidebarAdapter;
 import com.example.jhonsalya.evist.ViewHolder.EventViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.squareup.picasso.Picasso;
 
 
 public class MainActivity extends AppCompatActivity
@@ -67,6 +78,11 @@ public class MainActivity extends AppCompatActivity
     //private RecyclerView mEventList;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+
+    //for recommendation event
+    private DatabaseReference recDatabase;
+    Dialog myDialog;
+    private ImageView detailPostImage;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -159,6 +175,55 @@ public class MainActivity extends AppCompatActivity
         mDatabase = FirebaseDatabase.getInstance().getReference().child("EventApp");
 
         //prepareEvents();
+
+        /**
+         * get random event to be posted in pop up menu
+         *
+         * */
+        recDatabase = FirebaseDatabase.getInstance().getReference().child("EventApp");
+        myDialog = new Dialog(this);
+        recDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Random random = new Random();
+
+                int questionCount = (int) dataSnapshot.getChildrenCount();
+                int rand = random.nextInt(questionCount);
+                Iterator itr = dataSnapshot.getChildren().iterator();
+
+                for(int i = 0; i < rand; i++) {
+                    itr.next();
+                }
+                DataSnapshot childSnapshot = (DataSnapshot) itr.next();
+
+                TextView txtclose;
+                Button btnFollow;
+                myDialog.setContentView(R.layout.custompopup);
+
+                detailPostImage = (ImageView) myDialog.findViewById(R.id.imagePopUp);
+                String post_image = (String) childSnapshot.child("image").getValue();
+                Picasso.with(MainActivity.this).load(post_image).into(detailPostImage);
+
+                txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+                txtclose.setText("X");
+                btnFollow = (Button) myDialog.findViewById(R.id.btnDetail);
+                txtclose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                myDialog.show();
+
+                //question = childSnapshot.getValue(Question.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
