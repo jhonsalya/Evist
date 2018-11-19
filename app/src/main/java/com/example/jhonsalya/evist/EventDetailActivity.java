@@ -14,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.jhonsalya.evist.Database.Database;
 import com.example.jhonsalya.evist.Model.Event;
+import com.example.jhonsalya.evist.Model.Order;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -72,22 +74,6 @@ public class EventDetailActivity extends AppCompatActivity {
         numberButton = (ElegantNumberButton)findViewById(R.id.number_button);
         btnCart = (FloatingActionButton)findViewById(R.id.btnCart);
 
-        btnCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*new Database(getBaseContext()).addToCart(new Order(
-                        eventId,
-                        currentEvent.getTitle(),
-                        numberButton.getNumber(),
-                        currentEvent.getPrice(),
-                        currentEvent.getLocation()
-                ));*/
-
-                Toast.makeText(EventDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
-                Intent cartActivity = new Intent(EventDetailActivity.this, CartActivity.class);
-                startActivity(cartActivity);
-            }
-        });
 
         detailPostImage = (ImageView) findViewById(R.id.event_image);
         detailPostTitle = (TextView) findViewById(R.id.event_title);
@@ -121,14 +107,14 @@ public class EventDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String post_image = (String) dataSnapshot.child("image").getValue();
-                String post_title = (String) dataSnapshot.child("title").getValue();
+                final String post_title = (String) dataSnapshot.child("title").getValue();
                 String post_category = (String) dataSnapshot.child("category").getValue();
-                String post_location = (String) dataSnapshot.child("location").getValue();
-                String post_price = (String) dataSnapshot.child("price").getValue();
+                final String post_location = (String) dataSnapshot.child("location").getValue();
+                final String post_price = (String) dataSnapshot.child("price").getValue();
                 String post_description = (String) dataSnapshot.child("description").getValue();
-                String post_start_date = (String) dataSnapshot.child("start_date").getValue();
+                final String post_start_date = (String) dataSnapshot.child("start_date").getValue();
                 String post_finish_date = (String) dataSnapshot.child("finish_date").getValue();
-                String post_start_time = (String) dataSnapshot.child("start_time").getValue();
+                final String post_start_time = (String) dataSnapshot.child("start_time").getValue();
                 String post_participant = (String) dataSnapshot.child("participant").getValue();
                 String post_target_age = (String) dataSnapshot.child("target_age").getValue();
                 String post_organizer = (String) dataSnapshot.child("organizer").getValue();
@@ -166,6 +152,25 @@ public class EventDetailActivity extends AppCompatActivity {
                 detailPostOrganizer.setText(post_organizer);
                 detailPostContact.setText(post_contact);
 
+                btnCart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new Database(getBaseContext()).addToCart(new Order(
+                                post_key,
+                                post_title,
+                                post_location,
+                                post_start_date,
+                                post_start_time,
+                                numberButton.getNumber(),
+                                post_price
+                        ));
+
+                        Toast.makeText(EventDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                        Intent cartActivity = new Intent(EventDetailActivity.this, CartActivity.class);
+                        startActivity(cartActivity);
+                    }
+                });
+
                 //show delete button if the user authenticated
                 /*if(mAuth.getCurrentUser() != null){
                     if(mAuth.getCurrentUser().getUid().equals(post_uid)){
@@ -180,6 +185,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     @Override
