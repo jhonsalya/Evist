@@ -20,6 +20,8 @@ import com.example.jhonsalya.evist.Database.Database;
 import com.example.jhonsalya.evist.Model.Order;
 import com.example.jhonsalya.evist.Model.Request;
 import com.example.jhonsalya.evist.ViewHolder.CartAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -42,6 +44,11 @@ public class CartActivity extends AppCompatActivity {
     List<Order> cart = new ArrayList<>();
     CartAdapter adapter;
 
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabaseUsers;
+    private FirebaseUser mCurrentUser;
+    private DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +57,11 @@ public class CartActivity extends AppCompatActivity {
         //Firebase
         database = FirebaseDatabase.getInstance();
         requests = database.getReference("UnpaidList");
+
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("EventApp");
 
         //Init
         recyclerView = (RecyclerView)findViewById(R.id.listCart);
@@ -98,7 +110,8 @@ public class CartActivity extends AppCompatActivity {
                         //Common.currentUser.getName(),
                         //edtAddress.getText().toString(),
                         txtTotalPrice.getText().toString(),
-                        cart
+                        cart,
+                        mCurrentUser.getUid()
                 );
 
                 //submit to firebase

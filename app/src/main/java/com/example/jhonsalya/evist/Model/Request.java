@@ -9,13 +9,32 @@ import java.util.List;
 public class Request {
     private String total;
     private List<Order> event;
+    private String sellerid;
+    private String buyerid;
 
     public Request() {
     }
 
-    public Request(String total, List<Order> event) {
+    public Request(String total, List<Order> event, String buyerid) {
         this.total = total;
         this.event = event;
+        this.buyerid = buyerid;
+    }
+
+    public String getSellerid() {
+        return sellerid;
+    }
+
+    public void setSellerid(String sellerid) {
+        this.sellerid = sellerid;
+    }
+
+    public String getBuyerid() {
+        return buyerid;
+    }
+
+    public void setBuyerid(String buyerid) {
+        this.buyerid = buyerid;
     }
 
     public String getTotal() {
