@@ -122,7 +122,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 String post_bank_account = (String) dataSnapshot.child("bank_account").getValue();
                 String post_account_number = (String) dataSnapshot.child("account_number").getValue();
                 String post_account_owner = (String) dataSnapshot.child("account_owner").getValue();
-                String post_uid = (String) dataSnapshot.child("uid").getValue();
+                final String post_uid = (String) dataSnapshot.child("uid").getValue();
 
                 mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(post_uid);
                 mDatabaseUsers.addValueEventListener(new ValueEventListener() {
@@ -162,7 +162,8 @@ public class EventDetailActivity extends AppCompatActivity {
                                 post_start_date,
                                 post_start_time,
                                 numberButton.getNumber(),
-                                post_price
+                                post_price,
+                                post_uid
                         ));
 
                         Toast.makeText(EventDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();

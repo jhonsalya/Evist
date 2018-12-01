@@ -12,11 +12,12 @@ public class Order {
     private String EventStartTime;
     private String Quantity;
     private String Price;
+    private String SellerId;
 
     public Order() {
     }
 
-    public Order(String eventID, String eventName, String eventAddress, String eventStartDate, String eventStartTime, String quantity, String price) {
+    public Order(String eventID, String eventName, String eventAddress, String eventStartDate, String eventStartTime, String quantity, String price, String sellerId) {
         EventID = eventID;
         EventName = eventName;
         EventAddress = eventAddress;
@@ -24,6 +25,7 @@ public class Order {
         EventStartTime = eventStartTime;
         Quantity = quantity;
         Price = price;
+        SellerId = sellerId;
     }
 
     public String getEventID() {
@@ -80,5 +82,13 @@ public class Order {
 
     public void setPrice(String price) {
         Price = price;
+    }
+
+    public String getSellerId() {
+        return SellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        SellerId = sellerId;
     }
 }

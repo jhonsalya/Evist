@@ -496,9 +496,16 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case Constant.S_POS_CART:
-                showToast("Cart");
-                Intent cartIntent = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(cartIntent);
+                if(mAuth.getCurrentUser() != null){
+                    showToast("Cart");
+                    Intent cartIntent = new Intent(MainActivity.this, CartActivity.class);
+                    startActivity(cartIntent);
+                }
+                else{
+                    showToast("Please Login First");
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
                 break;
 
             case Constant.S_POS_PURCHASE:

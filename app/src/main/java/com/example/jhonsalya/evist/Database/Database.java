@@ -27,7 +27,7 @@ public class Database extends SQLiteAssetHelper{
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String[] sqlSelect = {"EventId","EventName","EventAddress","EventStartDate","EventStartTime", "Quantity", "Price"};
+        String[] sqlSelect = {"EventId","EventName","EventAddress","EventStartDate","EventStartTime", "Quantity", "Price", "SellerId"};
         String sqlTable = "OrderDetail";
 
         qb.setTables(sqlTable);
@@ -42,7 +42,8 @@ public class Database extends SQLiteAssetHelper{
                         c.getString(c.getColumnIndex("EventStartDate")),
                         c.getString(c.getColumnIndex("EventStartTime")),
                         c.getString(c.getColumnIndex("Quantity")),
-                        c.getString(c.getColumnIndex("Price"))
+                        c.getString(c.getColumnIndex("Price")),
+                        c.getString(c.getColumnIndex("SellerId"))
                 ));
             }while(c.moveToNext());
         }
@@ -52,14 +53,15 @@ public class Database extends SQLiteAssetHelper{
     public void addToCart(Order order)
     {
         SQLiteDatabase db = getReadableDatabase();
-        String query = String.format("INSERT INTO OrderDetail(EventId,EventName,EventAddress, EventStartDate, EventStartTime, Quantity,Price) VALUES('%s','%s','%s','%s','%s','%s','%s');",
+        String query = String.format("INSERT INTO OrderDetail(EventId,EventName,EventAddress, EventStartDate, EventStartTime, Quantity, Price, SellerId) VALUES('%s','%s','%s','%s','%s','%s','%s','%s');",
                 order.getEventID(),
                 order.getEventName(),
                 order.getEventAddress(),
                 order.getEventStartDate(),
                 order.getEventStartTime(),
                 order.getQuantity(),
-                order.getPrice());
+                order.getPrice(),
+                order.getSellerId());
         db.execSQL(query);
     }
 

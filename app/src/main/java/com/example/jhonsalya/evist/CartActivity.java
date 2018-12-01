@@ -104,13 +104,39 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //create new request
+                String address = "";
+                String id = "";
+                String name = "";
+                String startdate = "";
+                String starttime = "";
+                String price = "";
+                String quantity = "";
+                String sellerid = "";
+                for (Order order:cart){
+                    address = order.getEventAddress();
+                    id = order.getEventID();
+                    name = order.getEventName();
+                    startdate = order.getEventStartDate();
+                    starttime = order.getEventStartTime();
+                    price = order.getPrice();
+                    quantity = order.getQuantity();
+                    sellerid = order.getSellerId();
+                }
 
                 Request request = new Request(
-                        //Common.currentUser.getPhone(),
-                        //Common.currentUser.getName(),
-                        //edtAddress.getText().toString(),
+//                        txtTotalPrice.getText().toString(),
+//                        cart,
+//                        mCurrentUser.getUid()
+
                         txtTotalPrice.getText().toString(),
-                        cart,
+                        address,
+                        id,
+                        name,
+                        startdate,
+                        starttime,
+                        price,
+                        quantity,
+                        sellerid,
                         mCurrentUser.getUid()
                 );
 

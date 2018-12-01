@@ -24,6 +24,9 @@ import com.example.jhonsalya.evist.UserProfileActivity;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
+
+    //THIS IS NOT IN USED I THINK
+
     private Context mContext;
     private List<Event> eventList;
 
