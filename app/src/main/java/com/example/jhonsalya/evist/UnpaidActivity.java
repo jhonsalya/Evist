@@ -71,13 +71,13 @@ public class UnpaidActivity extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(TransactionViewHolder viewHolder, Transaction model, int position) {
-                //final String post_key = model.getEventID().toString();
+                final String post_key = getRef(position).getKey().toString();
 
-                viewHolder.setTitle(model.getEventName());
-                viewHolder.setLocation(model.getEventAddress());
-                viewHolder.setDate(model.getEventStartDate());
-                viewHolder.setTime(model.getEventStartTime());
-                viewHolder.setTotal(model.getEventStartTime());
+                viewHolder.setTitle(model.getName());
+                viewHolder.setLocation(model.getAddress());
+                viewHolder.setDate(model.getStartdate());
+                viewHolder.setTime(model.getStarttime());
+                viewHolder.setTotal(model.getTotal());
 
                 //viewHolder.setImage(getApplicationContext(),model.getImage());
 
@@ -86,7 +86,7 @@ public class UnpaidActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent eventDetailActivity = new Intent(UnpaidActivity.this, UnpaidDetailActivity.class);
-                        //eventDetailActivity.putExtra("PostId", post_key);
+                        eventDetailActivity.putExtra("PostId", post_key);
                         startActivity(eventDetailActivity);
                     }
                 });

@@ -5,31 +5,38 @@ package com.example.jhonsalya.evist.Model;
  */
 
 public class Transaction {
+
+    private String address;
     private String buyerid;
-    private String total;
-    private String status;
-    private String eventAddress;
-    private String eventID;
-    private String eventName;
-    private String eventStartDate;
-    private String eventStartTime;
+    private String id;
+    private String name;
     private String price;
     private String quantity;
+    private String startdate;
+    private String starttime;
+    private String total;
 
     public Transaction() {
     }
 
-    public Transaction(String buyerid, String total, String status, String eventAddress, String eventID, String eventName, String eventStartDate, String eventStartTime, String price, String quantity) {
+    public Transaction(String address, String buyerid, String id, String name, String price, String quantity, String startdate, String starttime, String total) {
+        this.address = address;
         this.buyerid = buyerid;
-        this.total = total;
-        this.status = status;
-        this.eventAddress = eventAddress;
-        this.eventID = eventID;
-        this.eventName = eventName;
-        this.eventStartDate = eventStartDate;
-        this.eventStartTime = eventStartTime;
+        this.id = id;
+        this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.startdate = startdate;
+        this.starttime = starttime;
+        this.total = total;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getBuyerid() {
@@ -40,60 +47,20 @@ public class Transaction {
         this.buyerid = buyerid;
     }
 
-    public String getTotal() {
-        return total;
+    public String getId() {
+        return id;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getStatus() {
-        return status;
+    public String getName() {
+        return name;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getEventAddress() {
-        return eventAddress;
-    }
-
-    public void setEventAddress(String eventAddress) {
-        this.eventAddress = eventAddress;
-    }
-
-    public String getEventID() {
-        return eventID;
-    }
-
-    public void setEventID(String eventID) {
-        this.eventID = eventID;
-    }
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getEventStartDate() {
-        return eventStartDate;
-    }
-
-    public void setEventStartDate(String eventStartDate) {
-        this.eventStartDate = eventStartDate;
-    }
-
-    public String getEventStartTime() {
-        return eventStartTime;
-    }
-
-    public void setEventStartTime(String eventStartTime) {
-        this.eventStartTime = eventStartTime;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPrice() {
@@ -110,5 +77,29 @@ public class Transaction {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+    public String getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(String startdate) {
+        this.startdate = startdate;
+    }
+
+    public String getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(String starttime) {
+        this.starttime = starttime;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 }
