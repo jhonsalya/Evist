@@ -36,6 +36,10 @@ public class TransactionViewHolder extends RecyclerView.ViewHolder {
         btndetail.setText(button);
     }
 
+    public void setButtonVisibility(){
+        btndetail.setVisibility(View.GONE);
+    }
+
     public void setTitle(String title){
         TextView post_title = (TextView) mView.findViewById(R.id.event_name);
         post_title.setText(title);

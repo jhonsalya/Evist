@@ -38,10 +38,6 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    String mainId = "uid";
-    String intentQuery = "";
-    Query dataQuery;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +48,6 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Transaction");
-        //dataQuery = mDatabase.orderByChild("bankaccount").startAt("BCA").endAt("BCA"+"\uf8ff");
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
@@ -67,7 +62,7 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
                 R.layout.unpaid_confirm_card,
                 TransactionViewHolder.class,
                 //dataQuery
-                mDatabase.orderByChild("status").equalTo("waiting_"+mCurrentUser.getUid())
+                mDatabase.orderByChild("statusseller").equalTo("waiting_"+mCurrentUser.getUid())
         ) {
             @Override
             protected void populateViewHolder(TransactionViewHolder viewHolder, Transaction model, int position) {
