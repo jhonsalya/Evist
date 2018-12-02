@@ -94,7 +94,6 @@
                             android:id="@+id/event_bank_account_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:text="Bank Account" />
 
                         <TextView
@@ -116,7 +115,6 @@
                             android:id="@+id/event_account_number_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:text="Account Number" />
                         <TextView
                             android:id="@+id/event_account_number"
@@ -134,9 +132,8 @@
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:text="Owner Name"
                             />
                         <TextView
@@ -245,6 +242,7 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:onClick="uploadReceiptButtonClicked"
                 android:text="UPLOAD RECEIPT"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"

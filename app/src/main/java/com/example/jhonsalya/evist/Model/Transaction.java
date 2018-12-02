@@ -16,6 +16,10 @@ public class Transaction {
     private String starttime;
     private String total;
 
+    private String bankaccount;
+    private String bankaccountNumber;
+    private String bankaccountName;
+
     public Transaction() {
     }
 
@@ -29,6 +33,45 @@ public class Transaction {
         this.startdate = startdate;
         this.starttime = starttime;
         this.total = total;
+    }
+
+    public Transaction(String address, String buyerid, String id, String name, String price, String quantity, String startdate, String starttime, String total, String bankaccount, String bankaccountNumber, String bankaccountName) {
+        this.address = address;
+        this.buyerid = buyerid;
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.startdate = startdate;
+        this.starttime = starttime;
+        this.total = total;
+        this.bankaccount = bankaccount;
+        this.bankaccountNumber = bankaccountNumber;
+        this.bankaccountName = bankaccountName;
+    }
+
+    public String getBankaccount() {
+        return bankaccount;
+    }
+
+    public void setBankaccount(String bankaccount) {
+        this.bankaccount = bankaccount;
+    }
+
+    public String getBankaccountNumber() {
+        return bankaccountNumber;
+    }
+
+    public void setBankaccountNumber(String bankaccountNumber) {
+        this.bankaccountNumber = bankaccountNumber;
+    }
+
+    public String getBankaccountName() {
+        return bankaccountName;
+    }
+
+    public void setBankaccountName(String bankaccountName) {
+        this.bankaccountName = bankaccountName;
     }
 
     public String getAddress() {

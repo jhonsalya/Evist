@@ -104,6 +104,7 @@ public class UnpaidDetailActivity extends AppCompatActivity {
     public void uploadButtonClicked(View view){
         Intent receiptIntent = new Intent(UnpaidDetailActivity.this, UploadReceiptActivity.class);
         receiptIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        receiptIntent.putExtra("PostId", post_key);
         startActivity(receiptIntent);
     }
 }

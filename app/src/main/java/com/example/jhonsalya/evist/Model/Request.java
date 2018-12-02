@@ -9,11 +9,11 @@ import java.util.List;
 public class Request {
     private String total;
     private List<Order> event;
-    private String eventAddress;
-    private String eventID;
-    private String eventName;
-    private String eventStartDate;
-    private String eventStartTime;
+    private String address;
+    private String id;
+    private String name;
+    private String startdate;
+    private String starttime;
     private String price;
     private String quantity;
     private String sellerid;
@@ -22,13 +22,13 @@ public class Request {
     public Request() {
     }
 
-    public Request(String total, String eventAddress, String eventID, String eventName, String eventStartDate, String eventStartTime, String price, String quantity, String sellerid, String buyerid) {
+    public Request(String total, String address, String id, String name, String startdate, String starttime, String price, String quantity, String sellerid, String buyerid) {
         this.total = total;
-        this.eventAddress = eventAddress;
-        this.eventID = eventID;
-        this.eventName = eventName;
-        this.eventStartDate = eventStartDate;
-        this.eventStartTime = eventStartTime;
+        this.address = address;
+        this.id = id;
+        this.name = name;
+        this.startdate = startdate;
+        this.starttime = starttime;
         this.price = price;
         this.quantity = quantity;
         this.sellerid = sellerid;
@@ -51,44 +51,44 @@ public class Request {
         this.event = event;
     }
 
-    public String getEventAddress() {
-        return eventAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setEventAddress(String eventAddress) {
-        this.eventAddress = eventAddress;
+    public void setAddress(String eventAddress) {
+        this.address = eventAddress;
     }
 
-    public String getEventID() {
-        return eventID;
+    public String getId() {
+        return id;
     }
 
-    public void setEventID(String eventID) {
-        this.eventID = eventID;
+    public void setId(String eventID) {
+        this.id = eventID;
     }
 
-    public String getEventName() {
-        return eventName;
+    public String getName() {
+        return name;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setName(String eventName) {
+        this.name = eventName;
     }
 
-    public String getEventStartDate() {
-        return eventStartDate;
+    public String getStartdate() {
+        return startdate;
     }
 
-    public void setEventStartDate(String eventStartDate) {
-        this.eventStartDate = eventStartDate;
+    public void setStartdate(String eventStartDate) {
+        this.startdate = eventStartDate;
     }
 
-    public String getEventStartTime() {
-        return eventStartTime;
+    public String getStarttime() {
+        return starttime;
     }
 
-    public void setEventStartTime(String eventStartTime) {
-        this.eventStartTime = eventStartTime;
+    public void setStarttime(String eventStartTime) {
+        this.starttime = eventStartTime;
     }
 
     public String getPrice() {
