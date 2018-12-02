@@ -52,7 +52,10 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Transaction");
-        mDatabaseDetail = mDatabase.child("event").child("0");
+        //dataQuery = mDatabase.orderByChild("bankaccount").startAt("BCA").endAt("BCA"+"\uf8ff");
+
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
     }
 
     @Override
@@ -63,7 +66,8 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
                 Transaction.class,
                 R.layout.unpaid_confirm_card,
                 TransactionViewHolder.class,
-                mDatabase
+                //dataQuery
+                mDatabase.orderByChild("status").equalTo("waiting_"+mCurrentUser.getUid())
         ) {
             @Override
             protected void populateViewHolder(TransactionViewHolder viewHolder, Transaction model, int position) {
@@ -83,7 +87,7 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent eventDetailActivity = new Intent(ConfirmPaymentActivity.this, ConfirmPaymentDetailActivity.class);
-                        //eventDetailActivity.putExtra("PostId", post_key);
+                        eventDetailActivity.putExtra("PostId", post_key);
                         startActivity(eventDetailActivity);
                     }
                 });
