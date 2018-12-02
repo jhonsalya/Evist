@@ -166,6 +166,7 @@ public class UploadReceiptActivity extends AppCompatActivity {
                                     newPost.child("receipt").setValue(downloadurl.toString());
                                     newPost.child("statusseller").setValue("waiting_"+post_seller_id);
                                     newPost.child("statusbuyer").setValue("");
+                                    newPost.child("unpaidid").setValue(post_key);
                                     newPost.child("name").setValue(post_title);
                                     newPost.child("address").setValue(post_location);
                                     newPost.child("total").setValue(post_total_price);

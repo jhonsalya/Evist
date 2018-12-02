@@ -25,9 +25,11 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
 
     private String post_key = null;
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseUnpaid;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
     private FirebaseUser mCurrentUser;
+
     private ImageView detailReceiptImage;
     private TextView detailPostTitle;
     private TextView detailPostLocation;
@@ -44,6 +46,7 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
 
         post_key = getIntent().getExtras().getString("PostId");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Transaction");
+        mDatabaseUnpaid = FirebaseDatabase.getInstance().getReference().child("UnpaidList");
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
@@ -98,6 +101,7 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final String post_buyerid = (String) dataSnapshot.child("buyerid").getValue();
                 final String post_sellerid = (String) dataSnapshot.child("sellerid").getValue();
+                final String unpaidid = (String) dataSnapshot.child("unpaidid").getValue();
 
                 final DatabaseReference newPost = mDatabase.child(post_key);
 
@@ -115,6 +119,7 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
                                     Intent salesIntnet = new Intent(ConfirmPaymentDetailActivity.this, SalesActivity.class);
                                     salesIntnet.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(salesIntnet);
+                                    mDatabaseUnpaid.child(unpaidid).removeValue();
                                 }
                             }
                         });

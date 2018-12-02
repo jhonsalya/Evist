@@ -2,6 +2,7 @@ package com.example.jhonsalya.evist;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.jhonsalya.evist.Model.Category;
@@ -68,7 +70,7 @@ public class AddEventActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
     private FirebaseUser mCurrentUser;
 
-    Calendar mCurrentDate;
+    Calendar mCurrentDate, mCurrentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +143,32 @@ public class AddEventActivity extends AppCompatActivity {
                     }
                 }, year, month, day);
                 mDatePicker.show();
+            }
+        });
+
+        //show dialog for picking time
+        editStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCurrentTime = Calendar.getInstance();
+                int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mCurrentTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        String minuteConvert;
+                        if(selectedMinute < 10){
+                            minuteConvert = "0"+Integer.toString(selectedMinute);
+                        }
+                        else {
+                            minuteConvert = Integer.toString(selectedMinute);
+                        }
+                        editStartTime.setText(selectedHour + ":" + minuteConvert);
+                    }
+                }, hour, minute, true); //24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
             }
         });
 
@@ -235,10 +263,7 @@ public class AddEventActivity extends AppCompatActivity {
                 !TextUtils.isEmpty(participantValue) &&
                 !TextUtils.isEmpty(targetAgeValue) &&
                 !TextUtils.isEmpty(organizerValue) &&
-                !TextUtils.isEmpty(contactValue) &&
-                !TextUtils.isEmpty(bankAccountValue) &&
-                !TextUtils.isEmpty(accountNumberValue) &&
-                !TextUtils.isEmpty(accountOwnerValue)){
+                !TextUtils.isEmpty(contactValue)){
 
             StorageReference filePath = storageReference.child("PostEvent").child(uri.getLastPathSegment());
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -288,6 +313,10 @@ public class AddEventActivity extends AppCompatActivity {
                 }
             });
 
+        }
+        else{
+            Toast.makeText(this, "Please Fill All Form", Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
         }
     }
 }

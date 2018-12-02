@@ -1,8 +1,10 @@
 package com.example.jhonsalya.evist;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -179,8 +181,25 @@ public class UserProfileActivity extends AppCompatActivity {
                                     startActivity(editActivityIntent);
                                     return true;
                                 case R.id.action_play_next:
-                                    Toast.makeText(getApplicationContext(), "Delete Event", Toast.LENGTH_SHORT).show();
-                                    mDatabase.child(post_key).removeValue();
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserProfileActivity.this);
+                                    alertDialog.setMessage("Are You Sure Want to Delete?");
+                                    alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+
+                                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Toast.makeText(UserProfileActivity.this, "Event Deleted", Toast.LENGTH_SHORT).show();
+                                            mDatabase.child(post_key).removeValue();
+                                        }
+                                    });
+
+                                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Toast.makeText(UserProfileActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    alertDialog.show();
                                     return true;
                                 default:
                             }

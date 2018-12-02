@@ -2,6 +2,7 @@ package com.example.jhonsalya.evist;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -64,7 +66,7 @@ public class EditEventActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
     private FirebaseUser mCurrentUser;
 
-    Calendar mCurrentDate;
+    Calendar mCurrentDate, mCurrentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,7 @@ public class EditEventActivity extends AppCompatActivity {
                 DatePickerDialog mDatePicker = new DatePickerDialog(EditEventActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
+                        selectedMonth++;
                         editStartDate.setText(selectedDay+"/"+selectedMonth+"/"+selectedYear);
                         mCurrentDate.set(selectedYear, selectedMonth, selectedDay);
                     }
@@ -130,11 +133,38 @@ public class EditEventActivity extends AppCompatActivity {
                 DatePickerDialog mDatePicker = new DatePickerDialog(EditEventActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
+                        selectedMonth++;
                         editFinishDate.setText(selectedDay+"/"+selectedMonth+"/"+selectedYear);
                         mCurrentDate.set(selectedYear, selectedMonth, selectedDay);
                     }
                 }, year, month, day);
                 mDatePicker.show();
+            }
+        });
+
+        //show dialog for picking time
+        editStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCurrentTime = Calendar.getInstance();
+                int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mCurrentTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker = new TimePickerDialog(EditEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        String minuteConvert;
+                        if(selectedMinute < 10){
+                            minuteConvert = "0"+Integer.toString(selectedMinute);
+                        }
+                        else {
+                            minuteConvert = Integer.toString(selectedMinute);
+                        }
+                        editStartTime.setText(selectedHour + ":" + minuteConvert);
+                    }
+                }, hour, minute, true); //24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
             }
         });
 

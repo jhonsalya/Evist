@@ -279,6 +279,11 @@
                     app:met_maxCharacters="11"
                     app:met_primaryColor="@android:color/white"
                     app:met_singleLineEllipsis="true"
+
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     />
 
                 <com.rengwuxian.materialedittext.MaterialEditText

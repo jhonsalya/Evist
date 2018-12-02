@@ -1,7 +1,10 @@
 package com.example.jhonsalya.evist;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +20,10 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.jhonsalya.evist.Database.Database;
 import com.example.jhonsalya.evist.Model.Event;
 import com.example.jhonsalya.evist.Model.Order;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +36,8 @@ public class EventDetailActivity extends AppCompatActivity {
     private String post_key = null;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
+    private DatabaseReference mDatabaseUsersBlock;
+
     private ImageView detailPostImage;
     private TextView detailPostTitle;
     private TextView detailPostCategory;
@@ -55,12 +63,16 @@ public class EventDetailActivity extends AppCompatActivity {
     private Button editButton;
 
     private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
 
     FloatingActionButton btnCart;
     ElegantNumberButton numberButton;
 
     Event currentEvent;
     String eventId = "";
+
+    String uidOwn;
+    String report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +101,10 @@ public class EventDetailActivity extends AppCompatActivity {
         detailPostOrganizer = (TextView) findViewById(R.id.event_organizer_value);
         detailPostContact = (TextView) findViewById(R.id.event_organizer_phone_value);
         detailPostedBy = (TextView) findViewById(R.id.event_posted_by_value);
+
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
+        mDatabaseUsersBlock = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
 
 //        detailPostBankAccount = (TextView) findViewById(R.id.detailParticipant);
@@ -129,7 +145,9 @@ public class EventDetailActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String post_posted_by = (String) dataSnapshot.child("name").getValue();
+                        String report_value = (String) dataSnapshot.child("status").getValue();
                         detailPostedBy.setText(post_posted_by);
+                        report = report_value;
                     }
 
                     @Override
@@ -151,6 +169,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 detailPostTargetAge.setText(post_target_age);
                 detailPostOrganizer.setText(post_organizer);
                 detailPostContact.setText(post_contact);
+                uidOwn = post_uid;
 
                 btnCart.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -205,6 +224,51 @@ public class EventDetailActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_three_dots) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(EventDetailActivity.this);
+            alertDialog.setMessage("Are You Sure Want to Report this?");
+            alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+
+            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    int reportNum = Integer.parseInt(report);
+                    reportNum = reportNum + 1;
+
+                    final DatabaseReference newPost = mDatabaseUsers;
+                    final String finalReportNum = Integer.toString(reportNum);
+                    mDatabaseUsersBlock.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            newPost.child("status").setValue(finalReportNum).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(EventDetailActivity.this, "Reported", Toast.LENGTH_SHORT).show();
+                                        Intent eventDetailActivity = new Intent(EventDetailActivity.this, EventDetailActivity.class);
+                                        eventDetailActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        eventDetailActivity.putExtra("PostId", post_key);
+                                        startActivity(eventDetailActivity);
+                                    }
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            });
+
+            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Toast.makeText(EventDetailActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                }
+            });
+            alertDialog.show();
             return true;
         }
 
