@@ -164,6 +164,7 @@ public class UploadReceiptActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     newPost.child("receipt").setValue(downloadurl.toString());
+                                    newPost.child("status").setValue("0");
                                     newPost.child("name").setValue(post_title);
                                     newPost.child("address").setValue(post_location);
                                     newPost.child("total").setValue(post_total_price);

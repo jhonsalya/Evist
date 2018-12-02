@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference recDatabase;
     Dialog myDialog;
     private ImageView detailPostImage;
+    private TextView detailPostName;
+    private TextView detailPostLocation;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -194,15 +196,22 @@ public class MainActivity extends AppCompatActivity
                 for(int i = 0; i < rand; i++) {
                     itr.next();
                 }
-                DataSnapshot childSnapshot = (DataSnapshot) itr.next();
+                final DataSnapshot childSnapshot = (DataSnapshot) itr.next();
 
                 TextView txtclose;
                 Button btnFollow;
                 myDialog.setContentView(R.layout.custompopup);
-
+                detailPostName = (TextView) myDialog.findViewById(R.id.eventNamePopUp);
+                detailPostLocation = (TextView) myDialog.findViewById(R.id.eventDetailPopUp);
                 detailPostImage = (ImageView) myDialog.findViewById(R.id.imagePopUp);
+
                 String post_image = (String) childSnapshot.child("image").getValue();
+                String post_name = (String) childSnapshot.child("title").getValue();
+                String post_location = (String) childSnapshot.child("location").getValue();
+
                 Picasso.with(MainActivity.this).load(post_image).into(detailPostImage);
+                detailPostName.setText(post_name);
+                detailPostLocation.setText(post_location);
 
                 txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
                 txtclose.setText("X");
@@ -211,6 +220,15 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v) {
                         myDialog.dismiss();
+                    }
+                });
+                btnFollow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent eventDetailActivity = new Intent(MainActivity.this, EventDetailActivity.class);
+                        eventDetailActivity.putExtra("PostId", childSnapshot.getKey());
+                        //Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_SHORT).show();
+                        startActivity(eventDetailActivity);
                     }
                 });
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

@@ -32,6 +32,10 @@ public class TransactionViewHolder extends RecyclerView.ViewHolder {
         overflow = (ImageView) itemView.findViewById(R.id.overflow);
     }
 
+    public void setButtonName(String button){
+        btndetail.setText(button);
+    }
+
     public void setTitle(String title){
         TextView post_title = (TextView) mView.findViewById(R.id.event_name);
         post_title.setText(title);
