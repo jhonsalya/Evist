@@ -10,9 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -32,7 +34,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class EditEventActivity extends AppCompatActivity {
 
@@ -41,7 +45,7 @@ public class EditEventActivity extends AppCompatActivity {
     private Uri uri = null;
     private ImageButton imageButton;
     private EditText editName;
-    private EditText editCategory;
+    //private EditText editCategory;
     private EditText editLocation;
     private EditText editPrice;
     private EditText editDesc;
@@ -52,6 +56,7 @@ public class EditEventActivity extends AppCompatActivity {
     private EditText editTargetAge;
     private EditText editOrganizer;
     private EditText editContact;
+    private Spinner editSpinner;
 
     //bank info
     private EditText editBankAccount;
@@ -61,6 +66,7 @@ public class EditEventActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private DatabaseReference categoryReference;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
@@ -76,10 +82,11 @@ public class EditEventActivity extends AppCompatActivity {
         post_key = getIntent().getExtras().getString("PostId");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("EventApp");
         storageReference = FirebaseStorage.getInstance().getReference().child("PostEvent");
+        categoryReference = FirebaseDatabase.getInstance().getReference();
 
         imageButton = (ImageButton) findViewById(R.id.edit_event_image);
         editName = (EditText) findViewById(R.id.edit_event_name);
-        editCategory = (EditText) findViewById(R.id.edit_category);
+        //editCategory = (EditText) findViewById(R.id.edit_category);
         editLocation  = (EditText) findViewById(R.id.edit_location);
         editPrice = (EditText) findViewById(R.id.edit_event_price);
         editDesc = (EditText) findViewById(R.id.edit_event_description);
@@ -90,6 +97,7 @@ public class EditEventActivity extends AppCompatActivity {
         editTargetAge = (EditText) findViewById(R.id.edit_target_age);
         editOrganizer = (EditText) findViewById(R.id.edit_event_organizer);
         editContact = (EditText) findViewById(R.id.edit_contact);
+        editSpinner = findViewById(R.id.spinner);
 
         //bank info
         editBankAccount = (EditText) findViewById(R.id.edit_event_bank_account);
@@ -174,7 +182,7 @@ public class EditEventActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String post_image = (String) dataSnapshot.child("image").getValue();
                 String post_title = (String) dataSnapshot.child("title").getValue();
-                String post_category = (String) dataSnapshot.child("category").getValue();
+                final String post_category = (String) dataSnapshot.child("category").getValue();
                 String post_location = (String) dataSnapshot.child("location").getValue();
                 String post_price = (String) dataSnapshot.child("price").getValue();
                 String post_description = (String) dataSnapshot.child("description").getValue();
@@ -192,7 +200,7 @@ public class EditEventActivity extends AppCompatActivity {
 
                 Picasso.with(EditEventActivity.this).load(post_image).into(imageButton);
                 editName.setText(post_title, TextView.BufferType.EDITABLE);
-                editCategory.setText(post_category);
+                //editCategory.setText(post_category);
                 editLocation.setText(post_location);
                 editPrice.setText(post_price);
                 editDesc.setText(post_description);
@@ -206,6 +214,38 @@ public class EditEventActivity extends AppCompatActivity {
                 editBankAccount.setText(post_bank_account);
                 editAccountNumber.setText(post_account_number);
                 editAccountOwner.setText(post_account_owner);
+                setCategory(post_category);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void setCategory(final String post_category){
+        //load category to the spinner
+        categoryReference.child("Category").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Is better to use a List, because you don't know the size
+                // of the iterator returned by dataSnapshot.getChildren() to
+                // initialize the array
+                final List<String> areas = new ArrayList<String>();
+
+
+                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                    String areaName = areaSnapshot.child("name").getValue(String.class);
+                    areas.add(areaName);
+                }
+
+                Spinner areaSpinner = (Spinner) findViewById(R.id.spinner);
+                ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(EditEventActivity.this, android.R.layout.simple_spinner_item, areas);
+                areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                areaSpinner.setAdapter(areasAdapter);
+                int selectionPosition= areasAdapter.getPosition(post_category);
+                areaSpinner.setSelection(selectionPosition);
             }
 
             @Override
@@ -253,7 +293,7 @@ public class EditEventActivity extends AppCompatActivity {
         }
 
         final String nameValue = editName.getText().toString().trim();
-        final String categoryValue = editCategory.getText().toString().trim();
+        //final String categoryValue = editCategory.getText().toString().trim();
         final String locationValue = editLocation.getText().toString().trim();
         final String priceValue = editPrice.getText().toString().trim();
         final String descValue = editDesc.getText().toString().trim();
@@ -264,13 +304,14 @@ public class EditEventActivity extends AppCompatActivity {
         final String targetAgeValue = editTargetAge.getText().toString().trim();
         final String organizerValue = editOrganizer.getText().toString().trim();
         final String contactValue =  editContact.getText().toString().trim();
+        final String categorySpinnerValue = editSpinner.getSelectedItem().toString();
 
         final String bankAccountValue = editBankAccount.getText().toString().trim();
         final String accountNumberValue = editAccountNumber.getText().toString().trim();
         final String accountOwnerValue = editAccountOwner.getText().toString().trim();
 
         if(!TextUtils.isEmpty(nameValue) &&
-                !TextUtils.isEmpty(categoryValue) &&
+                !TextUtils.isEmpty(categorySpinnerValue) &&
                 !TextUtils.isEmpty(locationValue) &&
                 !TextUtils.isEmpty(priceValue) &&
                 !TextUtils.isEmpty(descValue) &&
@@ -291,7 +332,7 @@ public class EditEventActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     newPost.child("title").setValue(nameValue);
-                    newPost.child("category").setValue(categoryValue);
+                    newPost.child("category").setValue(categorySpinnerValue);
                     newPost.child("location").setValue(locationValue);
                     newPost.child("price").setValue(priceValue);
                     newPost.child("description").setValue(descValue);
