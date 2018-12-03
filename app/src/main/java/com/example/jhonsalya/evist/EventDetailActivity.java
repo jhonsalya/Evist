@@ -145,7 +145,7 @@ public class EventDetailActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String post_posted_by = (String) dataSnapshot.child("name").getValue();
-                        String report_value = (String) dataSnapshot.child("status").getValue();
+                        String report_value = (String) dataSnapshot.child("reported").getValue();
                         detailPostedBy.setText(post_posted_by);
                         report = report_value;
                     }
@@ -239,11 +239,11 @@ public class EventDetailActivity extends AppCompatActivity {
                     mDatabaseUsersBlock.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            newPost.child("status").setValue(finalReportNum).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            newPost.child("reported").setValue(finalReportNum).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(EventDetailActivity.this, "Reported", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(EventDetailActivity.this, "reported", Toast.LENGTH_SHORT).show();
                                         Intent eventDetailActivity = new Intent(EventDetailActivity.this, EventDetailActivity.class);
                                         eventDetailActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         eventDetailActivity.putExtra("PostId", post_key);
