@@ -76,7 +76,12 @@
         <activity
             android:name=".CategoryActivity"
             android:label="Category" />
-        <activity android:name=".EventByCategoryActivity"></activity>
+        <activity android:name=".EventByCategoryActivity" />
+
+        <service
+            android:name=".Service.ListenOrder"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
