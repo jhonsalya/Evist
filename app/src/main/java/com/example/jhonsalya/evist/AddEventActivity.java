@@ -71,6 +71,7 @@ public class AddEventActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
 
     Calendar mCurrentDate, mCurrentTime;
+    private String startTimeValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,6 @@ public class AddEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_event);
 
         editName = (EditText) findViewById(R.id.edit_event_name);
-        editCategory = (EditText) findViewById(R.id.edit_category);
         editLocation  = (EditText) findViewById(R.id.edit_location);
         editPrice = (EditText) findViewById(R.id.edit_event_price);
         editDesc = (EditText) findViewById(R.id.edit_event_description);
@@ -165,6 +165,7 @@ public class AddEventActivity extends AppCompatActivity {
                             minuteConvert = Integer.toString(selectedMinute);
                         }
                         editStartTime.setText(selectedHour + ":" + minuteConvert);
+                        //startTimeValue = selectedHour +":"+ minuteConvert;
                     }
                 }, hour, minute, true); //24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -235,7 +236,6 @@ public class AddEventActivity extends AppCompatActivity {
         mDialog.show();
 
         final String nameValue = editName.getText().toString().trim();
-        final String categoryValue = editCategory.getText().toString().trim();
         final String locationValue = editLocation.getText().toString().trim();
         final String priceValue = editPrice.getText().toString().trim();
         final String descValue = editDesc.getText().toString().trim();
