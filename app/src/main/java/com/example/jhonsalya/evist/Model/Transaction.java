@@ -20,6 +20,9 @@ public class Transaction {
     private String bankaccountNumber;
     private String bankaccountName;
 
+    private String statusbuyer;
+    private String statusseller;
+
     public Transaction() {
     }
 
@@ -144,5 +147,21 @@ public class Transaction {
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public String getStatusbuyer() {
+        return statusbuyer;
+    }
+
+    public void setStatusbuyer(String statusbuyer) {
+        this.statusbuyer = statusbuyer;
+    }
+
+    public String getStatusseller() {
+        return statusseller;
+    }
+
+    public void setStatusseller(String statusseller) {
+        this.statusseller = statusseller;
     }
 }

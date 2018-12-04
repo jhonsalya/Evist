@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.jhonsalya.evist.Model.Event;
 import com.example.jhonsalya.evist.Model.EventAdapter;
+import com.example.jhonsalya.evist.Service.ListenOrder;
 import com.example.jhonsalya.evist.Sidebar.Constant;
 import com.example.jhonsalya.evist.Sidebar.SidebarAdapter;
 import com.example.jhonsalya.evist.ViewHolder.EventViewHolder;
@@ -242,6 +243,10 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+        //call service for notification of new order
+        Intent service = new Intent(MainActivity.this, ListenOrder.class);
+        startService(service);
     }
 
     @Override
