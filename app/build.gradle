@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.jhonsalya.evist"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -51,6 +51,9 @@ dependencies {
     //For cart
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+
+    //card form library
+    implementation 'com.craftman.cardform:cardform:0.0.2'
 
 }
 apply plugin: 'com.google.gms.google-services'

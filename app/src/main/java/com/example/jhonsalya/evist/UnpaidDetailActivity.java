@@ -1,9 +1,13 @@
 package com.example.jhonsalya.evist;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +36,8 @@ public class UnpaidDetailActivity extends AppCompatActivity {
     private TextView detailPostBankAccount;
     private TextView detailPostAccountNumber;
     private TextView detailPostAccountOwner;
+
+    Dialog myDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +108,62 @@ public class UnpaidDetailActivity extends AppCompatActivity {
     }
 
     public void uploadButtonClicked(View view){
-        Intent receiptIntent = new Intent(UnpaidDetailActivity.this, UploadReceiptActivity.class);
-        receiptIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        receiptIntent.putExtra("PostId", post_key);
-        startActivity(receiptIntent);
+//        Intent receiptIntent = new Intent(UnpaidDetailActivity.this, UploadReceiptActivity.class);
+//        receiptIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        receiptIntent.putExtra("PostId", post_key);
+//        startActivity(receiptIntent);
+        mDatabase.child(post_key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String post_total_price = (String) dataSnapshot.child("total").getValue();
+
+                showPopUp(post_total_price);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void showPopUp(final String total){
+        myDialog = new Dialog(this);
+        TextView txtclose;
+        Button btnCredit;
+        Button btnBank;
+        myDialog.setContentView(R.layout.popup_payment);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setText("X");
+        btnCredit = (Button) myDialog.findViewById(R.id.btnCredit);
+        btnBank = (Button) myDialog.findViewById(R.id.btnBankTransfer);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        btnCredit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //OPEN CREDIT CARD PAGE
+                Intent creditCardActivity = new Intent(UnpaidDetailActivity.this, CreditCardActivity.class);
+                creditCardActivity.putExtra("PostId", total);
+                //Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_SHORT).show();
+                startActivity(creditCardActivity);
+            }
+        });
+        btnBank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent receiptIntent = new Intent(UnpaidDetailActivity.this, UploadReceiptActivity.class);
+                receiptIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                receiptIntent.putExtra("PostId", post_key);
+                startActivity(receiptIntent);
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
     }
 }

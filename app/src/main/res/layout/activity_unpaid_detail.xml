@@ -255,7 +255,7 @@
         </android.support.v7.widget.CardView>
 
         <Button
-            android:text="UPLOAD RECEIPT"
+            android:text="Make Payment"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
             android:layout_alignParentBottom="true"

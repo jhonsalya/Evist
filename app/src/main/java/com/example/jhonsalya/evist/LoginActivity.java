@@ -97,8 +97,10 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(loginIntent);
                     }
                 }
-                else
+                else{
                     Toast.makeText(LoginActivity.this, "You Are Blocked", Toast.LENGTH_SHORT).show();
+                    mAuth.signOut();
+                }
             }
 
             @Override
