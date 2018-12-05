@@ -104,7 +104,8 @@ public class EventDetailActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
-        mDatabaseUsersBlock = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        if(mCurrentUser != null)
+            mDatabaseUsersBlock = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
 
 //        detailPostBankAccount = (TextView) findViewById(R.id.detailParticipant);
@@ -224,51 +225,57 @@ public class EventDetailActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_three_dots) {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(EventDetailActivity.this);
-            alertDialog.setMessage("Are You Sure Want to Report this?");
-            alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+            if(mCurrentUser != null){
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(EventDetailActivity.this);
+                alertDialog.setMessage("Are You Sure Want to Report this?");
+                alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
-            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    int reportNum = Integer.parseInt(report);
-                    reportNum = reportNum + 1;
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int reportNum = Integer.parseInt(report);
+                        reportNum = reportNum + 1;
 
-                    final DatabaseReference newPost = mDatabaseUsers;
-                    final String finalReportNum = Integer.toString(reportNum);
-                    mDatabaseUsersBlock.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            newPost.child("reported").setValue(finalReportNum).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(EventDetailActivity.this, "reported", Toast.LENGTH_SHORT).show();
-                                        Intent eventDetailActivity = new Intent(EventDetailActivity.this, EventDetailActivity.class);
-                                        eventDetailActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        eventDetailActivity.putExtra("PostId", post_key);
-                                        startActivity(eventDetailActivity);
+                        final DatabaseReference newPost = mDatabaseUsers;
+                        final String finalReportNum = Integer.toString(reportNum);
+                        mDatabaseUsersBlock.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                newPost.child("reported").setValue(finalReportNum).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Toast.makeText(EventDetailActivity.this, "reported", Toast.LENGTH_SHORT).show();
+                                            Intent eventDetailActivity = new Intent(EventDetailActivity.this, EventDetailActivity.class);
+                                            eventDetailActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            eventDetailActivity.putExtra("PostId", post_key);
+                                            startActivity(eventDetailActivity);
+                                        }
                                     }
-                                }
-                            });
+                                });
 
-                        }
+                            }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
-                }
-            });
+                            }
+                        });
+                    }
+                });
 
-            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(EventDetailActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
-                }
-            });
-            alertDialog.show();
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(EventDetailActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.show();
+            }
+            else{
+                Toast.makeText(this, "Please Login to Use This Feature", Toast.LENGTH_SHORT).show();
+            }
+
             return true;
         }
 

@@ -42,7 +42,7 @@ public class UnpaidActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    String mainId = "uid";
+    String mainId = "buyerid";
     String intentQuery = "";
     Query dataQuery;
 
@@ -56,18 +56,32 @@ public class UnpaidActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("UnpaidList");
-        mDatabaseDetail = mDatabase.child("event").child("0");
+
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
+        intentQuery = mCurrentUser.getUid();
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        if(mainId == null){
+            mainId = "buyerid";
+        }
+        if(intentQuery != null){
+            dataQuery = mDatabase.orderByChild(mainId).startAt(intentQuery).endAt(intentQuery+"\uf8ff");
+        }
+        else{
+            dataQuery = mDatabase.orderByChild(mainId);
+        }
 
         FirebaseRecyclerAdapter<Transaction, TransactionViewHolder> FBRA = new FirebaseRecyclerAdapter<Transaction, TransactionViewHolder>(
                 Transaction.class,
                 R.layout.unpaid_confirm_card,
                 TransactionViewHolder.class,
-                mDatabase
+                dataQuery
+                //mDatabase.orderByChild("buyerid").equalTo(id)
         ) {
             @Override
             protected void populateViewHolder(TransactionViewHolder viewHolder, Transaction model, int position) {

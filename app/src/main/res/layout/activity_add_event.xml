@@ -82,6 +82,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_event_name"
                     android:hint="Event Name"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
@@ -417,6 +418,7 @@
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edit_event_bank_account_no"
                 android:hint="Account Number"
+                android:digits="1234567890 "
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
@@ -436,6 +438,7 @@
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edit_event_bank_account_owner"
                 android:hint="Account Owner Name"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"

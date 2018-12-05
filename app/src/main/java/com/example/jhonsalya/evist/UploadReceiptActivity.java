@@ -185,7 +185,7 @@ public class UploadReceiptActivity extends AppCompatActivity {
                                             if(task.isSuccessful()){
                                                 mDialog.dismiss();
                                                 Toast.makeText(UploadReceiptActivity.this, "Upload Complete", Toast.LENGTH_LONG).show();
-                                                Intent mainActivityIntent = new Intent(UploadReceiptActivity.this, MainActivity.class);
+                                                Intent mainActivityIntent = new Intent(UploadReceiptActivity.this, UnpaidActivity.class);
                                                 startActivity(mainActivityIntent);
                                             }
                                         }

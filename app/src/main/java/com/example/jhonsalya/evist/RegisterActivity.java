@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -72,6 +73,10 @@ public class RegisterActivity extends AppCompatActivity {
                         Intent loginActivityIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                         loginActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(loginActivityIntent);
+                    }
+                    else{
+                        //Log.i("Response","Failed to create user:"+task.getException().getMessage());
+                        Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

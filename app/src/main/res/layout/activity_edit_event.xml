@@ -81,6 +81,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_event_name"
                     android:hint="Event Name"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                     android:text="Bakso Bakar Festival"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
@@ -426,6 +427,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_event_bank_account_no"
                     android:hint="Account Number"
+                    android:digits="1234567890 "
                     android:text="1233 4534 34344"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
@@ -446,6 +448,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edit_event_bank_account_owner"
                     android:hint="Account Owner Name"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                     android:text="I Made Ngurah Bagus Agung"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"

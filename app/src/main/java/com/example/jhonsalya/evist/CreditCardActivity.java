@@ -1,5 +1,6 @@
 package com.example.jhonsalya.evist;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -31,8 +32,11 @@ public class CreditCardActivity extends AppCompatActivity {
         cardForm.setPayBtnClickListner(new OnPayBtnClickListner() {
             @Override
             public void onClick(Card card) {
-                Toast.makeText(CreditCardActivity.this, "Name: " +card.getName()+"  | Last 4 digits :"+card.getLast4(),
+                Toast.makeText(CreditCardActivity.this, "Payment Success"+card.getLast4(),
                         Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreditCardActivity.this, "Upload Complete", Toast.LENGTH_LONG).show();
+                Intent mainActivityIntent = new Intent(CreditCardActivity.this, UnpaidActivity.class);
+                startActivity(mainActivityIntent);
             }
         });
     }

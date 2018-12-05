@@ -532,13 +532,15 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case Constant.S_POS_PURCHASE:
-                isHaveChild = true; // have child
+                if(mAuth.getCurrentUser() != null){
+                    isHaveChild = true; // have child
 
-                if (parent.isGroupExpanded(groupPosition)) // if parent expanded
-                    parent.collapseGroup(groupPosition); // collapse parent
-                else
-                    parent.expandGroup(groupPosition); // expand parent
-                break;
+                    if (parent.isGroupExpanded(groupPosition)) // if parent expanded
+                        parent.collapseGroup(groupPosition); // collapse parent
+                    else
+                        parent.expandGroup(groupPosition); // expand parent
+                    break;
+                }
 
             case Constant.S_POS_SALES:
                 isHaveChild = true; // have child

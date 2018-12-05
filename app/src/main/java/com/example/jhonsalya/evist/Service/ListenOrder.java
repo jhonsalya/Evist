@@ -63,7 +63,9 @@ public class ListenOrder extends Service implements ChildEventListener{
         //Trigger here
         Transaction request = dataSnapshot.getValue(Transaction.class);
         if(mCurrentUser!=null){
-            if(request.getStatusseller().equals("waiting_"+mCurrentUser.getUid())){
+            String req = request.getStatusseller();
+            String id = mCurrentUser.getUid();
+            if(req != null && !id.equals("") && req.equalsIgnoreCase("waiting_"+id)){
                 showNotificationSales(dataSnapshot.getKey(),request);
             }
         }
@@ -93,7 +95,9 @@ public class ListenOrder extends Service implements ChildEventListener{
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
         Transaction request = dataSnapshot.getValue(Transaction.class);
         if(mCurrentUser!=null){
-            if(request.getStatusbuyer().equals("confirmed_"+mCurrentUser.getUid())){
+            String req = request.getStatusbuyer();
+            String id = mCurrentUser.getUid();
+            if(req != null && !id.equals("") && req.equalsIgnoreCase("confirmed_"+id)){
                 showNotificationBuy(dataSnapshot.getKey(),request);
             }
         }
