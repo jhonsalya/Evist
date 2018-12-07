@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.jhonsalya.evist.Database.Database;
 import com.example.jhonsalya.evist.Model.Event;
 import com.example.jhonsalya.evist.Model.EventAdapter;
 import com.example.jhonsalya.evist.Service.ListenOrder;
@@ -553,6 +554,7 @@ public class MainActivity extends AppCompatActivity
 
             case Constant.S_POS_LOGOUT:
                 showToast("Logged Out");
+                new Database(getBaseContext()).cleanCart();
                 mAuth.signOut();
                 Intent LogoutIntent = new Intent(MainActivity.this, LoginActivity .class);
                 startActivity(LogoutIntent);
