@@ -44,7 +44,7 @@
                     android:padding="@dimen/activity_vertical_margin">
 
                     <ImageView
-                        android:id="@+id/event_image"
+                        android:id="@+id/ticket_image"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:contentDescription="@null"

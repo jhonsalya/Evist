@@ -1,16 +1,24 @@
 package com.example.jhonsalya.evist;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,6 +27,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class ConfirmPaymentDetailActivity extends AppCompatActivity {
@@ -29,6 +40,7 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
     private FirebaseUser mCurrentUser;
+    private StorageReference storageReference;
 
     private ImageView detailReceiptImage;
     private TextView detailPostTitle;
@@ -38,6 +50,13 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
     private TextView detailPostBankAccount;
     private TextView detailPostBankAccountNumber;
     private TextView detailPostBankAccountName;
+
+    Dialog myDialog;
+    private static final int GALLERY_REQUEST = 2;
+    private Uri uri = null;
+
+    Button btnTicket;
+    ImageButton btnPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +70,7 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         detailReceiptImage = (ImageView) findViewById(R.id.receipt_image);
         detailPostTitle = (TextView) findViewById(R.id.event_name);
@@ -96,6 +116,8 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
         mDialog.setMessage("Please Wait.....");
         mDialog.show();
 
+        changeImage();
+
         mDatabase.child(post_key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -138,5 +160,66 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void selectTicket(View view) {
+        myDialog = new Dialog(this);
+        TextView txtclose;
+        myDialog.setContentView(R.layout.popup_upload_ticket);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setText("X");
+        btnPhoto = (ImageButton) myDialog.findViewById(R.id.addTicketImage);
+        btnTicket = (Button) myDialog.findViewById(R.id.setTicket);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        btnPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageClicked();
+            }
+        });
+
+        btnTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+    private void imageClicked() {
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent,GALLERY_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
+            uri = data.getData();
+            btnPhoto.setImageURI(uri);
+        }
+    }
+
+    private void changeImage(){
+        StorageReference filePath = storageReference.child("TransactionTicket").child(uri.getLastPathSegment());
+        filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                final Uri downloadurl = taskSnapshot.getDownloadUrl();
+                final DatabaseReference newPost = mDatabase.child(post_key);
+                newPost.child("ticket").setValue(downloadurl.toString());
+
+            }
+        });
     }
 }

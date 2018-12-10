@@ -65,7 +65,7 @@ public class PurchasedActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent eventDetailActivity = new Intent(PurchasedActivity.this, DetailTicketActivity.class);
-                        //eventDetailActivity.putExtra("PostId", post_key);
+                        eventDetailActivity.putExtra("PostId", post_key);
                         startActivity(eventDetailActivity);
                     }
                 });

@@ -261,6 +261,16 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:onClick="selectTicket"
+                android:text="Select Ticket"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <Button
                 android:onClick="confirmPayment"
                 android:text="CONFIRM PAYMENT"
                 android:layout_marginRight="16dp"
