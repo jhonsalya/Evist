@@ -540,16 +540,28 @@ public class MainActivity extends AppCompatActivity
                         parent.collapseGroup(groupPosition); // collapse parent
                     else
                         parent.expandGroup(groupPosition); // expand parent
-                    break;
                 }
+                else {
+                    showToast("Please Login First");
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                break;
 
             case Constant.S_POS_SALES:
-                isHaveChild = true; // have child
+                if(mAuth.getCurrentUser() != null){
+                    isHaveChild = true; // have child
 
-                if (parent.isGroupExpanded(groupPosition)) // if parent expanded
-                    parent.collapseGroup(groupPosition); // collapse parent
-                else
-                    parent.expandGroup(groupPosition); // expand parent
+                    if (parent.isGroupExpanded(groupPosition)) // if parent expanded
+                        parent.collapseGroup(groupPosition); // collapse parent
+                    else
+                        parent.expandGroup(groupPosition); // expand parent
+                }
+                else {
+                    showToast("Please Login First");
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
                 break;
 
             case Constant.S_POS_LOGOUT:
