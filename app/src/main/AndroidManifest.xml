@@ -59,8 +59,8 @@
             android:name=".CartActivity"
             android:label="Cart" />
         <activity
-            android:name=".CheckoutActivity"
-            android:label="Checkout" />
+            android:name=".DetailTicketActivity"
+            android:label="Detail Ticket" />
         <activity
             android:name=".SalesActivity"
             android:label="Sales List" />

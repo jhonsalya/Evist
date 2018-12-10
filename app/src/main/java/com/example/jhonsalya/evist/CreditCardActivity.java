@@ -32,10 +32,11 @@ public class CreditCardActivity extends AppCompatActivity {
         cardForm.setPayBtnClickListner(new OnPayBtnClickListner() {
             @Override
             public void onClick(Card card) {
-                Toast.makeText(CreditCardActivity.this, "Payment Success"+card.getLast4(),
-                        Toast.LENGTH_SHORT).show();
-                Toast.makeText(CreditCardActivity.this, "Upload Complete", Toast.LENGTH_LONG).show();
+                //Toast.makeText(CreditCardActivity.this, "Payment Success"+card.getLast4(),Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(CreditCardActivity.this, "Payment Success", Toast.LENGTH_LONG).show();
                 Intent mainActivityIntent = new Intent(CreditCardActivity.this, UnpaidActivity.class);
+                mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(mainActivityIntent);
             }
         });

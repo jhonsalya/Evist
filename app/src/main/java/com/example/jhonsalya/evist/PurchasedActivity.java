@@ -1,9 +1,11 @@
 package com.example.jhonsalya.evist;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.example.jhonsalya.evist.Model.Transaction;
 import com.example.jhonsalya.evist.ViewHolder.TransactionViewHolder;
@@ -58,6 +60,15 @@ public class PurchasedActivity extends AppCompatActivity {
                 viewHolder.setTime(model.getStarttime());
                 viewHolder.setTotal(model.getTotal());
                 viewHolder.setButtonVisibility();
+
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent eventDetailActivity = new Intent(PurchasedActivity.this, DetailTicketActivity.class);
+                        //eventDetailActivity.putExtra("PostId", post_key);
+                        startActivity(eventDetailActivity);
+                    }
+                });
 
                 //viewHolder.setImage(getApplicationContext(),model.getImage());
 

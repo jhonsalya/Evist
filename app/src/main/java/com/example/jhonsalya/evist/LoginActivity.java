@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
                         mDialog.dismiss();
                     }
                     else{
-                        Toast.makeText(LoginActivity.this, "This wan", Toast.LENGTH_SHORT).show();
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthUserCollisionException e) {
