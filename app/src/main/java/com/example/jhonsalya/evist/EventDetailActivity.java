@@ -175,20 +175,28 @@ public class EventDetailActivity extends AppCompatActivity {
                 btnCart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new Database(getBaseContext()).addToCart(new Order(
-                                post_key,
-                                post_title,
-                                post_location,
-                                post_start_date,
-                                post_start_time,
-                                numberButton.getNumber(),
-                                post_price,
-                                post_uid
-                        ));
+                        if(mAuth.getCurrentUser() != null){
+                            new Database(getBaseContext()).addToCart(new Order(
+                                    post_key,
+                                    post_title,
+                                    post_location,
+                                    post_start_date,
+                                    post_start_time,
+                                    numberButton.getNumber(),
+                                    post_price,
+                                    post_uid
+                            ));
 
-                        Toast.makeText(EventDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
-                        Intent cartActivity = new Intent(EventDetailActivity.this, CartActivity.class);
-                        startActivity(cartActivity);
+                            Toast.makeText(EventDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                            Intent cartActivity = new Intent(EventDetailActivity.this, CartActivity.class);
+                            startActivity(cartActivity);
+                        }
+                        else{
+                            Toast.makeText(EventDetailActivity.this, "Please Login First!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(EventDetailActivity.this, LoginActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
                     }
                 });
 
