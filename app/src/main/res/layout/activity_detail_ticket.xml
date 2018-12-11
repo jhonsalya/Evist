@@ -49,7 +49,6 @@
                         android:layout_height="200dp"
                         android:contentDescription="@null"
                         android:scaleType="fitCenter"
-                        android:background="@drawable/ticket"
                         />
 
                     <TextView
