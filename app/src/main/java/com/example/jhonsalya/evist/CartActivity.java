@@ -180,9 +180,28 @@ public class CartActivity extends AppCompatActivity {
     //press ctrl+o
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        if(item.getTitle().equals(Common.DELETE))
-            deleteCart(item.getOrder());
+    public boolean onContextItemSelected(final MenuItem item) {
+        if(item.getTitle().equals(Common.DELETE)){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(CartActivity.this);
+            alertDialog.setMessage("Are You Sure Want to Delete?");
+            alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+
+            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Toast.makeText(CartActivity.this, "Item Deleted", Toast.LENGTH_SHORT).show();
+                    deleteCart(item.getOrder());
+                }
+            });
+
+            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Toast.makeText(CartActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                }
+            });
+            alertDialog.show();
+        }
         return true;
     }
 

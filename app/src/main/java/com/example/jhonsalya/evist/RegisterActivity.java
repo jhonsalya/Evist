@@ -108,5 +108,9 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });*/
         }
+        else
+        {
+            Toast.makeText(this, "Please FIll All Form", Toast.LENGTH_SHORT).show();
+        }
     }
 }

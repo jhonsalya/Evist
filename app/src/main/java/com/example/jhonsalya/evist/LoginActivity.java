@@ -80,6 +80,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+        else
+        {
+            Toast.makeText(this, "Please Fill All Form", Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
+        }
     }
 
     public void checkUserExists(){

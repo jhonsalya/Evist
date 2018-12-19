@@ -96,14 +96,13 @@
 
                 <Button
                     android:id="@+id/button4"
-                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:text="Checkout"
-                    android:textColor="#ffffff"
+                    android:layout_marginTop="15dp"
                     android:backgroundTint="@color/fbutton_color_midnight_blue"
                     android:onClick="checkoutButtonClicked"
-                    />
+                    android:text="Check Payment"
+                    android:textColor="#ffffff" />
 
             </LinearLayout>
 

@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity
     //end of drawer
 
     private RecyclerView recyclerView;
+    private TextView emptyView;
     private EventAdapter adapter;
     private List<Event> eventList;
 
@@ -167,6 +168,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);*/
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        emptyView = (TextView) findViewById(R.id.empty_view);
 
         eventList = new ArrayList<>();
         adapter = new EventAdapter(this, eventList);
@@ -292,6 +294,15 @@ public class MainActivity extends AppCompatActivity
             }
         };
         recyclerView.setAdapter(FBRA);
+//
+//        if (FBRA.getItemCount() == 0) {
+//            recyclerView.setVisibility(View.GONE);
+//            emptyView.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//            recyclerView.setVisibility(View.VISIBLE);
+//            emptyView.setVisibility(View.GONE);
+//        }
     }
 
     //adding few albums for testing

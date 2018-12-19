@@ -137,7 +137,7 @@ public class UploadReceiptActivity extends AppCompatActivity {
         final String bankNumberValue = editBankNumber.getText().toString().trim();
         final String bankAccountNameValue = editBankAccoutName.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(bankValue) && !TextUtils.isEmpty(bankNumberValue) && !TextUtils.isEmpty(bankAccountNameValue)){
+        if(!TextUtils.isEmpty(bankValue) && !TextUtils.isEmpty(bankNumberValue) && !TextUtils.isEmpty(bankAccountNameValue) && uri != null){
 
             mDatabase.child(post_key).addValueEventListener(new ValueEventListener() {
                 @Override
