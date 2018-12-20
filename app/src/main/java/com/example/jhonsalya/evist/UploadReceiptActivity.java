@@ -165,7 +165,7 @@ public class UploadReceiptActivity extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     newPost.child("receipt").setValue(downloadurl.toString());
                                     newPost.child("statusseller").setValue("waiting_"+post_seller_id);
-                                    newPost.child("statusbuyer").setValue("");
+                                    newPost.child("statusbuyer").setValue("nostatus");
                                     newPost.child("unpaidid").setValue(post_key);
                                     newPost.child("name").setValue(post_title);
                                     newPost.child("address").setValue(post_location);
@@ -185,7 +185,7 @@ public class UploadReceiptActivity extends AppCompatActivity {
                                             if(task.isSuccessful()){
                                                 mDialog.dismiss();
                                                 Toast.makeText(UploadReceiptActivity.this, "Upload Complete", Toast.LENGTH_LONG).show();
-                                                Intent mainActivityIntent = new Intent(UploadReceiptActivity.this, UnpaidActivity.class);
+                                                Intent mainActivityIntent = new Intent(UploadReceiptActivity.this, MainActivity.class);
                                                 mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 startActivity(mainActivityIntent);
                                             }

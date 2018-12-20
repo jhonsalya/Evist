@@ -149,6 +149,7 @@ public class UnpaidDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //OPEN CREDIT CARD PAGE
                 Intent creditCardActivity = new Intent(UnpaidDetailActivity.this, CreditCardActivity.class);
+                creditCardActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 creditCardActivity.putExtra("PostId", total);
                 //Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_SHORT).show();
                 startActivity(creditCardActivity);

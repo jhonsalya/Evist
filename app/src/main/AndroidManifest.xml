@@ -83,7 +83,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".CreditCardActivity"></activity>
+        <activity android:name=".CreditCardActivity"
+            android:label="Credit Card">
+        </activity>
     </application>
 
 </manifest>

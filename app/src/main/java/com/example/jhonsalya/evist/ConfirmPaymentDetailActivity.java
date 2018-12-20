@@ -116,7 +116,13 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
         mDialog.setMessage("Please Wait.....");
         mDialog.show();
 
-        changeImage();
+        if(uri != null){
+            changeImage();
+        }
+        else{
+            Toast.makeText(this, "Please Select Ticket First", Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
+        }
 
         mDatabase.child(post_key).addValueEventListener(new ValueEventListener() {
             @Override
