@@ -44,10 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void registerButtonClicked(View view){
-        /*Toast.makeText(RegisterActivity.this, "Please Fill All Form", Toast.LENGTH_LONG).show();
-        final ProgressDialog mDialog = new ProgressDialog(RegisterActivity.this);
-        mDialog.setMessage("Please Wait.....");
-        mDialog.show();*/
 
         final String nameValue = editName.getText().toString().trim();
         final String emailValue = editEmail.getText().toString().trim();
@@ -68,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                         newPost.child("image").setValue("default");
                         newPost.child("status").setValue("0");
                         newPost.child("reported").setValue("0");
+                        newPost.child("interest").setValue("");
 
                         Toast.makeText(RegisterActivity.this, "Register Complete, Please Login", Toast.LENGTH_LONG).show();
                         Intent loginActivityIntent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -75,38 +72,11 @@ public class RegisterActivity extends AppCompatActivity {
                         startActivity(loginActivityIntent);
                     }
                     else{
-                        //Log.i("Response","Failed to create user:"+task.getException().getMessage());
                         Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
 
-            /*final DatabaseReference newPost = databaseReference.push();
-            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    newPost.child("Name").setValue(nameValue);
-                    newPost.child("Phone").setValue(phoneValue);
-                    newPost.child("Password").setValue(passwordValue);
-                    newPost.child("Email").setValue(emailValue).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                mDialog.dismiss();
-                                Toast.makeText(RegisterActivity.this, "Upload Complete", Toast.LENGTH_LONG).show();
-                                Intent mainActivityIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                                startActivity(mainActivityIntent);
-                            }
-                        }
-                    });
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });*/
         }
         else
         {

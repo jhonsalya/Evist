@@ -37,6 +37,7 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
     private String post_key = null;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUnpaid;
+    private DatabaseReference mDatabaseEvent;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
     private FirebaseUser mCurrentUser;
@@ -58,6 +59,9 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
     Button btnTicket;
     ImageButton btnPhoto;
 
+    private DatabaseReference databaseReference;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +70,13 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
         post_key = getIntent().getExtras().getString("PostId");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Transaction");
         mDatabaseUnpaid = FirebaseDatabase.getInstance().getReference().child("UnpaidList");
+        mDatabaseEvent = FirebaseDatabase.getInstance().getReference().child("EventApp");
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         storageReference = FirebaseStorage.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
         detailReceiptImage = (ImageView) findViewById(R.id.receipt_image);
         detailPostTitle = (TextView) findViewById(R.id.event_name);
@@ -118,37 +124,83 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
 
         if(uri != null){
             changeImage();
+
+            mDatabase.child(post_key).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    final String post_buyerid = (String) dataSnapshot.child("buyerid").getValue();
+                    final String post_sellerid = (String) dataSnapshot.child("sellerid").getValue();
+                    final String unpaidid = (String) dataSnapshot.child("unpaidid").getValue();
+
+                    final DatabaseReference newPost = mDatabase.child(post_key);
+
+                    //edit status of the transaction to confirmed
+                    mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            newPost.child("statusbuyer").setValue("confirmed_"+post_buyerid);
+                            newPost.child("statusseller").setValue("confirmed_"+post_sellerid).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        mDialog.dismiss();
+                                        setBuyerInterest();
+                                        mDatabaseUnpaid.child(unpaidid).removeValue();
+                                    }
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
         else{
             Toast.makeText(this, "Please Select Ticket First", Toast.LENGTH_SHORT).show();
             mDialog.dismiss();
         }
 
+    }
+
+    public void setBuyerInterest(){
         mDatabase.child(post_key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                final String post_buyerid = (String) dataSnapshot.child("buyerid").getValue();
-                final String post_sellerid = (String) dataSnapshot.child("sellerid").getValue();
-                final String unpaidid = (String) dataSnapshot.child("unpaidid").getValue();
+                String id = (String) dataSnapshot.child("id").getValue();
+                final String buyer_id = (String) dataSnapshot.child("buyerid").getValue();
 
-                final DatabaseReference newPost = mDatabase.child(post_key);
-
-                //edit status of the transaction to confirmed
-                mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                mDatabaseEvent.child(id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        newPost.child("statusbuyer").setValue("confirmed_"+post_buyerid);
-                        newPost.child("statusseller").setValue("confirmed_"+post_sellerid).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        final String category = (String) dataSnapshot.child("category").getValue();
+
+                        final DatabaseReference newPostUser = databaseReference.child(buyer_id);
+                        mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    mDialog.dismiss();
-                                    Toast.makeText(ConfirmPaymentDetailActivity.this, "Payment Confirmed", Toast.LENGTH_SHORT).show();
-                                    Intent salesIntnet = new Intent(ConfirmPaymentDetailActivity.this, SalesActivity.class);
-                                    salesIntnet.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(salesIntnet);
-                                    mDatabaseUnpaid.child(unpaidid).removeValue();
-                                }
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                newPostUser.child("interest").setValue(category).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(ConfirmPaymentDetailActivity.this, "Payment Confirmed", Toast.LENGTH_SHORT).show();
+                                        Intent salesIntnet = new Intent(ConfirmPaymentDetailActivity.this, SalesActivity.class);
+                                        salesIntnet.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(salesIntnet);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
                             }
                         });
                     }
@@ -165,7 +217,6 @@ public class ConfirmPaymentDetailActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void selectTicket(View view) {

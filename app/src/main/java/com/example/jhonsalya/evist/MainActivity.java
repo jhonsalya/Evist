@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -37,6 +38,7 @@ import com.example.jhonsalya.evist.Sidebar.Constant;
 import com.example.jhonsalya.evist.Sidebar.SidebarAdapter;
 import com.example.jhonsalya.evist.ViewHolder.EventViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -81,6 +83,8 @@ public class MainActivity extends AppCompatActivity
     //private RecyclerView mEventList;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabaseUser;
+    private FirebaseUser mCurrentUser;
 
     //for recommendation event
     private DatabaseReference recDatabase;
@@ -105,23 +109,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent userProfileActivity = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(userProfileActivity);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
-        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();*/
+        mCurrentUser = mAuth.getCurrentUser();
 
         searchView=(MaterialSearchView)findViewById(R.id.search_view);
 
@@ -143,7 +131,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         //Get Intent here for search
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         if(intent != null){
             mainId = intent.getStringExtra("idPass");
             intentQuery = intent.getStringExtra("query");
@@ -163,9 +151,6 @@ public class MainActivity extends AppCompatActivity
         sidebarList.setAdapter(mAdapter);
         sidebarList.setOnGroupClickListener(this);
         sidebarList.setOnChildClickListener(this);
-
-        /*NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);*/
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         emptyView = (TextView) findViewById(R.id.empty_view);
@@ -187,8 +172,42 @@ public class MainActivity extends AppCompatActivity
          *
          * */
         recDatabase = FirebaseDatabase.getInstance().getReference().child("EventApp");
+
         myDialog = new Dialog(this);
-        recDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        if(mAuth.getCurrentUser() != null){
+            final Query[] query = new Query[1];
+            mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+            mDatabaseUser.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String interest = (String) dataSnapshot.child("interest").getValue();
+                    if (!interest.equalsIgnoreCase("")){
+                        query[0] = recDatabase.orderByChild("category").equalTo(interest);
+                    }
+                    else {
+                        query[0] = recDatabase;
+                    }
+                    recommendedShow(query[0]);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+        else{
+            Query query = recDatabase;
+            recommendedShow(query);
+        }
+
+        //call service for notification of new order
+        Intent service = new Intent(MainActivity.this, ListenOrder.class);
+        startService(service);
+    }
+
+    public void recommendedShow(Query query){
+        ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Random random = new Random();
@@ -237,19 +256,14 @@ public class MainActivity extends AppCompatActivity
                 });
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 myDialog.show();
-
-                //question = childSnapshot.getValue(Question.class);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
-
-        //call service for notification of new order
-        Intent service = new Intent(MainActivity.this, ListenOrder.class);
-        startService(service);
+        };
+        query.addListenerForSingleValueEvent(eventListener);
     }
 
     @Override
@@ -271,7 +285,6 @@ public class MainActivity extends AppCompatActivity
                 R.layout.event_card,
                 EventViewHolder.class,
                 dataQuery
-                //mDatabase.orderByChild(mainId)
         ) {
             @Override
             protected void populateViewHolder(EventViewHolder viewHolder, Event model, int position) {
@@ -294,40 +307,8 @@ public class MainActivity extends AppCompatActivity
             }
         };
         recyclerView.setAdapter(FBRA);
-//
-//        if (FBRA.getItemCount() == 0) {
-//            recyclerView.setVisibility(View.GONE);
-//            emptyView.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//            recyclerView.setVisibility(View.VISIBLE);
-//            emptyView.setVisibility(View.GONE);
-//        }
+
     }
-
-    //adding few albums for testing
-    /*private void prepareEvents(){
-        int[] covers = new int[]{
-                R.drawable.event1,
-        };
-
-        Event a = new Event("Bakso Bakar Festival", "Denpasar", "10000", covers[0]);
-        eventList.add(a);
-
-        a = new Event("Bakso Festival", "Denpasar", "10000", covers[0]);
-        eventList.add(a);
-
-        a = new Event("Bakso Festival", "Denpasar", "10000", covers[0]);
-        eventList.add(a);
-
-        a = new Event("Bakso Festival", "Denpasar", "10000", covers[0]);
-        eventList.add(a);
-
-        a = new Event("Bakso Festival", "Denpasar", "10000", covers[0]);
-        eventList.add(a);
-
-        adapter.notifyDataSetChanged();
-    }*/
 
     //recylerview item decoration - give equal margin around grid item
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration{
@@ -598,28 +579,4 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    /*@SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }*/
 }
